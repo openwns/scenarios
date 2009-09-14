@@ -25,14 +25,14 @@
  *
  ******************************************************************************/
 
-#ifndef PROJNAME_SIMULATIONMODEL_HPP
-#define PROJNAME_SIMULATIONMODEL_HPP
+#ifndef SCENARIOS_SIMULATIONMODEL_HPP
+#define SCENARIOS_SIMULATIONMODEL_HPP
 
 #include <WNS/simulator/ISimulationModel.hpp>
 #include <WNS/logger/Logger.hpp>
 #include <WNS/pyconfig/View.hpp>
 
-namespace projname {
+namespace scenarios {
 
     class SimulationModel :
         public wns::simulator::ISimulationModel
@@ -57,4 +57,4 @@ namespace projname {
     };
 }
 
-#endif // NOT defined PROJNAME_SIMULATIONMODEL_HPP
+#endif // NOT defined SCENARIOS_SIMULATIONMODEL_HPP

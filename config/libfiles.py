@@ -1,18 +1,18 @@
-libname = 'projname'
+libname = 'scenarios'
 
 srcFiles = [
-    'src/ProjNameModule.cpp',
+    'src/scenariosModule.cpp',
     'src/SimulationModel.cpp',
     ]
 
 hppFiles = [
-    'src/ProjNameModule.hpp',
+    'src/scenariosModule.hpp',
     'src/SimulationModel.hpp',
     ]
 
 pyconfigs = [
-    'projname/__init__.py',
-    'projname/simulationmodel.py',
+    'scenarios/__init__.py',
+    'scenarios/simulationmodel.py',
 ]
 
 dependencies = []

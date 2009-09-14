@@ -25,33 +25,33 @@
  *
  ******************************************************************************/
 
-#include <PROJNAME/ProjNameModule.hpp>
+#include <SCENARIOS/scenariosModule.hpp>
 
-using namespace projname;
+using namespace scenarios;
 
 STATIC_FACTORY_REGISTER_WITH_CREATOR(
-	ProjNameModule,
+	scenariosModule,
 	wns::module::Base,
-	"projname",
+	"scenarios",
 	wns::PyConfigViewCreator);
 
-ProjNameModule::ProjNameModule(const wns::pyconfig::View& _pyco) :
-	wns::module::Module<ProjNameModule>(_pyco)
+scenariosModule::scenariosModule(const wns::pyconfig::View& _pyco) :
+	wns::module::Module<scenariosModule>(_pyco)
 {
 }
 
-ProjNameModule::~ProjNameModule()
+scenariosModule::~scenariosModule()
 {
 }
 
-void ProjNameModule::configure()
+void scenariosModule::configure()
 {
 }
 
-void ProjNameModule::startUp()
+void scenariosModule::startUp()
 {
 }
 
-void ProjNameModule::shutDown()
+void scenariosModule::shutDown()
 {
 }

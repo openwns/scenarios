@@ -25,16 +25,16 @@
  *
  ******************************************************************************/
 
-#include <PROJNAME/SimulationModel.hpp>
+#include <SCENARIOS/SimulationModel.hpp>
 #include <WNS/node/Node.hpp>
 #include <WNS/osi/PDU.hpp>
 
-using namespace projname;
+using namespace scenarios;
 
 STATIC_FACTORY_REGISTER_WITH_CREATOR(
     SimulationModel,
     wns::simulator::ISimulationModel,
-    "projname.SimulationModel",
+    "scenarios.SimulationModel",
     wns::PyConfigViewCreator);
 
 SimulationModel::SimulationModel(const wns::pyconfig::View& config) :

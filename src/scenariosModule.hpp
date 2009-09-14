@@ -25,21 +25,21 @@
  *
  ******************************************************************************/
 
-#ifndef PROJNAME_PROJNAMEMODULE_HPP
-#define PROJNAME_PROJNAMEMODULE_HPP
+#ifndef SCENARIOS_SCENARIOSMODULE_HPP
+#define SCENARIOS_SCENARIOSMODULE_HPP
 
 #include <WNS/module/Module.hpp>
 
-namespace projname
+namespace scenarios
 {
-	class ProjNameModule :
-		public wns::module::Module<ProjNameModule>
+	class scenariosModule :
+		public wns::module::Module<scenariosModule>
 	{
 	public:
-		ProjNameModule(const wns::pyconfig::View& _pyco);
+		scenariosModule(const wns::pyconfig::View& _pyco);
 
 		virtual
-		~ProjNameModule();
+		~scenariosModule();
 
 		// Module interface
 		virtual void
@@ -53,5 +53,5 @@ namespace projname
 	};
 }
 
-#endif // NOT defined PROJNAME_PROJNAMEMODULE_HPP
+#endif // NOT defined SCENARIOS_SCENARIOSMODULE_HPP
 
