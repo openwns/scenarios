@@ -8,6 +8,17 @@ hppFiles = [
 
 pyconfigs = [
     'scenarios/__init__.py',
+    'scenarios/interfaces.py',
+    'scenarios/placer/__init__.py',
+    'scenarios/placer/hexagonal.py',
+    'scenarios/builders/__init__.py',
+    'scenarios/builders/creatorplacer.py',
+    'scenarios/simple/__init__.py',
+    'scenarios/simple/singlecell.py',
+    'scenarios/toolsupport/__init__.py',
+    'scenarios/toolsupport/pytreevisitors/__init__.py',
+    'scenarios/toolsupport/pytreevisitors/builders/__init__.py',
+    'scenarios/toolsupport/pytreevisitors/builders/creatorplacer.py',
 ]
 
 dependencies = []

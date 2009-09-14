@@ -1,1 +1,1 @@
-/local3/KKS/kks/openWNS--main--1.0/SConscript
+../../SConscript

@@ -25,6 +25,46 @@
 #
 ###############################################################################
 
-import interfaces
-import toolsupport
+import openwns.interface
 
+class INode(openwns.interface.Interface):
+    """
+    Interface for nodes that are handled by scenarios
+    """
+
+    @openwns.interface.abstractmethod
+    def setPosition(self, position):
+        """
+        Set the position of this node to position
+
+        @type  position: openwns.geometry.position.Position
+        @param position: The position to move this node to.
+        """
+        pass
+
+class INodePlacer(openwns.interface.Interface):
+    """
+    Interface for Strategies that define the placement of nodes
+    """
+
+    @openwns.interface.abstractmethod
+    def getPositions(self):
+        """
+        Get all positions where nodes will be placed.
+        """
+        pass
+
+class INodeCreator(openwns.interface.Interface):
+    """
+    Defines the interface for Node creation strategies
+    """
+
+    @openwns.interface.abstractmethod
+    def create(self):
+        """"
+        Implement the strategy to build your Node here
+
+        @rtype: scenario.interface.INode
+        @return: The new node that was created
+        """
+        pass

@@ -25,6 +25,4 @@
 #
 ###############################################################################
 
-import interfaces
-import toolsupport
-
+import pytreevisitors
