@@ -50,12 +50,17 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
         self.radius = radius
         self.rotate = rotate
 
+        self.center = openwns.geometry.position.Position(x = 1000.0, y = 1000.0, z = 0.0)
+
+    def setCenter(self, center):
+        self.center = center
+
     def _transformHexCoordinates(self, i, j, gridDistance):
         return openwns.geometry.position.Vector(math.sqrt(3)/2.0*j,float(i)+0.5*float(j))*gridDistance
 
     def getPositions(self):
-        center = openwns.geometry.position.Position(x = 0.0, y = 0.0, z = 0.0)
-        posList = [center] # central BS position
+        centralBSPosition = openwns.geometry.position.Position(x = 0.0, y = 0.0, z = 0.0)
+        posList = [centralBSPosition] # central BS position
 
         for circle in xrange(1, self.numberOfCircles +1): #  xrange(numberOfCircles)=0..numberOfCircles-1
             i=circle; j=0 # start vector
@@ -75,4 +80,4 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
                 di=-odj
                 dj=odi+odj
 
-        return posList
+        return [pos + self.center for pos in posList]

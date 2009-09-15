@@ -27,6 +27,9 @@
 
 import scenarios.interfaces
 
+import openwns.simulator
+import openwns.node
+
 class CreatorPlacerBuilder(object):
     """
     A scenario that consists of a single cell and an arbitrary number of user
@@ -52,10 +55,17 @@ class CreatorPlacerBuilder(object):
         assert isinstance(utCreator, scenarios.interfaces.INodeCreator)
         assert isinstance(utPlacer, scenarios.interfaces.INodePlacer)
 
+        newSimulator = openwns.simulator.OpenWNS()
+        newSimulator.simulationModel = openwns.node.NodeSimulationModel()
+        openwns.simulator.setSimulator(newSimulator)
+
         self.bsCreator = bsCreator
         self.bsPlacer = bsPlacer
         self.utCreator = utCreator
         self.utPlacer = utPlacer
+
+        self.allNodes = []
+        self.bsNodes = []
 
         self._createBaseStations()
 
@@ -66,3 +76,5 @@ class CreatorPlacerBuilder(object):
             bsNode = self.bsCreator.create()
             assert isinstance(bsNode, scenarios.interfaces.INode)
             bsNode.setPosition(currentPosition)
+            openwns.simulator.getSimulator().simulationModel.nodes.append(bsNode)
+            self.bsNodes.append(bsNode)
