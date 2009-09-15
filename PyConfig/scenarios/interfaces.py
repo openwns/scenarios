@@ -42,15 +42,36 @@ class INode(openwns.interface.Interface):
         """
         pass
 
+    @openwns.interface.abstractmethod
+    def getPosition(self):
+        """
+        Get the position of this node
+
+        @rtype:  openwns.geometry.position.Position
+        @return: The position to move this node to.
+        """
+        pass
+
 class INodePlacer(openwns.interface.Interface):
     """
     Interface for Strategies that define the placement of nodes
     """
 
     @openwns.interface.abstractmethod
+    def setCenter(self, center):
+        """
+        @type center : openwns.geometry.position.Position
+        @param center: The center of the coordinate system 
+        Translate the center of the coordinate system to the center
+        """
+
+    @openwns.interface.abstractmethod
     def getPositions(self):
         """
         Get all positions where nodes will be placed.
+
+        @rtype: [openwns.geometry.position.Position]
+        @return: A list of all positions where nodes shall be placed
         """
         pass
 

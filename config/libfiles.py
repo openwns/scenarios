@@ -11,6 +11,7 @@ pyconfigs = [
     'scenarios/interfaces.py',
     'scenarios/placer/__init__.py',
     'scenarios/placer/hexagonal.py',
+    'scenarios/placer/circular.py',
     'scenarios/builders/__init__.py',
     'scenarios/builders/creatorplacer.py',
     'scenarios/simple/__init__.py',

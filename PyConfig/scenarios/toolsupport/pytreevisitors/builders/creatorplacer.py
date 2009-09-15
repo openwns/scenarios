@@ -18,9 +18,13 @@ class CreatorPlacerBuilderVisitor(openwns.toolsupport.IPyTreeVisitor):
         xpos = []
         ypos = []
 
-        for bspos in o.positions:
+        for bspos in o.bsPositions:
             xpos.append(bspos.x)
             ypos.append(bspos.y)
+
+        for utpos in o.utPositions:
+            xpos.append(utpos.x)
+            ypos.append(utpos.y)
 
 #        pylab.plot((-200,200),(-200.0,200), color='r')
 #        pylab.plot((50.0,100.0),(25.0,100.0), color='r')
@@ -34,8 +38,13 @@ class CreatorPlacerBuilderVisitor(openwns.toolsupport.IPyTreeVisitor):
         pylab.xlim(min(xpos) - paddingx, max(xpos) + paddingx)
         pylab.ylim(min(ypos) - paddingy, max(ypos) + paddingy)
 
-        for bspos in o.positions:
+        for bspos in o.bsPositions:
             c=Circle((bspos.x, bspos.y), 5.0)
+
+            pylab.gca().add_patch(c)
+
+        for utpos in o.utPositions:
+            c=Circle((utpos.x, utpos.y), 5.0, facecolor="red")
 
             pylab.gca().add_patch(c)
 

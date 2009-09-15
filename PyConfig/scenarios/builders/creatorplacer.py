@@ -64,17 +64,31 @@ class CreatorPlacerBuilder(object):
         self.utCreator = utCreator
         self.utPlacer = utPlacer
 
-        self.allNodes = []
         self.bsNodes = []
+        self.utNodes = []
 
         self._createBaseStations()
+        self._createUserTerminals()
 
     def _createBaseStations(self):
-        self.positions = self.bsPlacer.getPositions()
+        self.bsPositions = self.bsPlacer.getPositions()
 
-        for currentPosition in self.positions:
+        for currentPosition in self.bsPositions:
             bsNode = self.bsCreator.create()
             assert isinstance(bsNode, scenarios.interfaces.INode)
             bsNode.setPosition(currentPosition)
             openwns.simulator.getSimulator().simulationModel.nodes.append(bsNode)
             self.bsNodes.append(bsNode)
+
+    def _createUserTerminals(self):
+        self.utPositions = []
+        for bsPosition in self.bsPositions:
+            self.utPlacer.setCenter(bsPosition)
+            self.utPositions += self.utPlacer.getPositions()
+
+        for currentPosition in self.utPositions:
+            utNode = self.utCreator.create()
+            assert isinstance(utNode, scenarios.interfaces.INode)
+            utNode.setPosition(currentPosition)
+            openwns.simulator.getSimulator().simulationModel.nodes.append(utNode)
+            self.utNodes.append(utNode)
