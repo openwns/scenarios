@@ -52,6 +52,20 @@ class INode(openwns.interface.Interface):
         """
         pass
 
+    @openwns.interface.abstractmethod
+    def getNodeType(self):
+        """
+        Return the type of this node. Possible Values:
+
+        BS : Base Station
+        UE : User Terminal
+        RN : Relay Node
+
+        @rtype: str
+        @return: The node type as a string
+        """
+        pass
+
 class INodePlacer(openwns.interface.Interface):
     """
     Interface for Strategies that define the placement of nodes

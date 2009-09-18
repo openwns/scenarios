@@ -14,6 +14,7 @@ pyconfigs = [
     'scenarios/placer/circular.py',
     'scenarios/builders/__init__.py',
     'scenarios/builders/creatorplacer.py',
+    'scenarios/traffic/__init__.py',
     'scenarios/simple/__init__.py',
     'scenarios/simple/singlecell.py',
     'scenarios/toolsupport/__init__.py',
