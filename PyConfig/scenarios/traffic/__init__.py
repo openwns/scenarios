@@ -38,9 +38,21 @@ class CBR:
 
     def create(self, node):
         return constanze.traffic.CBR0(offset = self.offset,
-                    throughput = self.trafficRate,
-                    packetSize = self.packetSize,
-                    parentLogger = self.loggerRetriever(node))
+                                      throughput = self.trafficRate,
+                                      packetSize = self.packetSize,
+                                      parentLogger = self.loggerRetriever(node))
+
+class VoIP:
+
+    def __init__(self, offset, direction='DL', loggerRetriever = lambda node: node.logger):
+        self.offset = offset
+        self.direction = direction
+        self.loggerRetriever = loggerRetriever
+
+    def create(self, node):
+        return constanze.traffic.VoIP(offset = self.offset,
+                                      direction = self.direction,
+                                      parentLogger = self.loggerRetriever(node))
 
 def addTraffic(bindingCreator, loadCreator):
     ueNodes = openwns.simulator.getSimulator().simulationModel.getNodesByType("UE")
