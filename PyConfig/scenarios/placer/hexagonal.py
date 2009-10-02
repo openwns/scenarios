@@ -31,7 +31,7 @@ import math
 
 class HexagonalPlacer(scenarios.interfaces.INodePlacer):
 
-    def __init__(self, numberOfCircles, radius, rotate = 0.0):
+    def __init__(self, numberOfCircles, radius, height, rotate = 0.0):
         """ 
         @type  numberOfCircles: int
         @param numberOfCircles: The number of circles around the center cell
@@ -48,15 +48,16 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
 
         self.numberOfCircles = numberOfCircles
         self.radius = radius
+        self.height = height
         self.rotate = rotate
 
-        self.center = openwns.geometry.position.Position(x = 1000.0, y = 1000.0, z = 0.0)
+        self.center = openwns.geometry.position.Position(x = 1000.0, y = 1000.0, z = self.height)
 
     def setCenter(self, center):
         self.center = center
 
     def _transformHexCoordinates(self, i, j, gridDistance):
-        return openwns.geometry.position.Vector(math.sqrt(3)/2.0*j,float(i)+0.5*float(j))*gridDistance
+        return openwns.geometry.position.Vector(math.sqrt(3)/2.0*j,float(i)+0.5*float(j), self.height)*gridDistance
 
     def getPositions(self):
         centralBSPosition = openwns.geometry.position.Position(x = 0.0, y = 0.0, z = 0.0)
