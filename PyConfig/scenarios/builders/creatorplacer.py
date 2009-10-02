@@ -83,7 +83,9 @@ class CreatorPlacerBuilder(object):
     def _createUserTerminals(self):
         self.utPositions = []
         for bsPosition in self.bsPositions:
-            self.utPlacer.setCenter(bsPosition)
+            # We only translate by the x,y coordinates. The height is not altered
+            offset = openwns.geometry.position.Position(bsPosition.x, bsPosition.y, 0.0)
+            self.utPlacer.setCenter(offset)
             self.utPositions += self.utPlacer.getPositions()
 
         for currentPosition in self.utPositions:
