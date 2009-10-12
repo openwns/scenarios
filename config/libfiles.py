@@ -17,6 +17,8 @@ pyconfigs = [
     'scenarios/traffic/__init__.py',
     'scenarios/simple/__init__.py',
     'scenarios/simple/singlecell.py',
+    'scenarios/plotting/__init__.py',
+    'scenarios/plotting/Plotting.py',
     'scenarios/toolsupport/__init__.py',
     'scenarios/toolsupport/pytreevisitors/__init__.py',
     'scenarios/toolsupport/pytreevisitors/builders/__init__.py',

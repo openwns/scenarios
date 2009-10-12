@@ -31,33 +31,33 @@ import math
 
 class HexagonalPlacer(scenarios.interfaces.INodePlacer):
 
-    def __init__(self, numberOfCircles, radius, height, rotate = 0.0):
+    def __init__(self, numberOfCircles, interSiteDistance, rotate = 0.0):
         """ 
         @type  numberOfCircles: int
         @param numberOfCircles: The number of circles around the center cell
 
-        @type  radius: float
-        @param radius: The cell radius is in Meters [m]
+        @type  interSiteDistance: float
+        @param interSiteDistance: The cell interSiteDistance is in Meters [m]
 
         @type  rotate: float
         @param rotate: Rotate the final result by rotate in radiant [0..2pi]
         """
         assert numberOfCircles >= 0
-        assert radius > 0
+        assert interSiteDistance > 0
         assert 0 <= rotate <= 2.0*math.pi # rotates the final result by corrAngle
 
         self.numberOfCircles = numberOfCircles
-        self.radius = radius
-        self.height = height
+        self.interSiteDistance = interSiteDistance
+
         self.rotate = rotate
 
-        self.center = openwns.geometry.position.Position(x = 1000.0, y = 1000.0, z = self.height)
+        self.center = openwns.geometry.position.Position(x = 1000.0, y = 1000.0, z = 0.0)
 
     def setCenter(self, center):
         self.center = center
 
     def _transformHexCoordinates(self, i, j, gridDistance):
-        return openwns.geometry.position.Vector(math.sqrt(3)/2.0*j,float(i)+0.5*float(j), self.height)*gridDistance
+        return openwns.geometry.position.Vector(math.sqrt(3)/2.0*j,float(i)+0.5*float(j), 0.0)*gridDistance
 
     def getPositions(self):
         centralBSPosition = openwns.geometry.position.Position(x = 0.0, y = 0.0, z = 0.0)
@@ -69,7 +69,7 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
             dj=1 # delta vector
             for edge in xrange(6): # 0..5
                 for way in xrange(circle):
-                    v = self._transformHexCoordinates(i,j, self.radius)
+                    v = self._transformHexCoordinates(i,j, self.interSiteDistance)
                     p = v.turn2D(self.rotate).toPosition()
 
                     posList.append(p)
@@ -82,3 +82,49 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
                 dj=odi+odj
 
         return [pos + self.center for pos in posList]
+
+
+def isInCircle(position, radius, center):
+    vector = (position - center)
+    return vector.length() < radius
+
+def isInHexagon(position, radius, center, corrAngle = 0.0):
+    """ returns true if position is located within hexagon boundaries.
+        Can be used to correct random placement of UTs within circle!=hexagon
+    """
+    assert 0 <= corrAngle <= 2.0*math.pi   # rotates hexagon by corrAngle. 0=radius to the right, flat top
+    #print "isInHexagon([%s],%d,[%s],%f) ?"%(position.toString(),radius,center.toString(),corrAngle)
+    vector = (position-center)/radius      # from center to position; normalized
+    length = vector.length2D()
+    cos30deg = 0.86602540378443865         # =cos(30deg)=sin(60deg)
+    if length>1.0:
+        return False
+    if length<cos30deg:
+        return True
+    angle  = vector.angle2D()-corrAngle    # 0=right; pi/2=up; pi=left; -pi/2=down
+    angleReduced = angle % (math.pi/3.0)   # in [0..60deg]
+    x = length*math.cos(angleReduced)
+    y = length*math.sin(angleReduced)
+    maxy = (1.0-x)*2.0*cos30deg
+    isIn = (y<=maxy)
+    #print "isInHexagon([%s],%d,[%s],%f): v=%s, l=%.3f a=%.3fdeg =>%s"%(position.toString(),radius,center.toString(),corrAngle,vector.toString(3),length,angleReduced*180/math.pi,isIn)
+    return isIn
+
+def createAreaScanMobility(steps, radius, center, corrAngle):
+    import rise.Mobility
+    mobility = None
+    radius = radius * 2 / math.sqrt(3)
+    xMin = center.x - radius
+    yMin = center.y - radius
+
+    stepSize = 2.0 * radius / float(steps)
+
+    for x in xrange(steps + 1):
+        for y in xrange(steps + 1):
+            pos = openwns.geometry.position.Position(xMin + x * stepSize, yMin + y * stepSize, 1.5)
+            if isInHexagon(pos, radius, center, corrAngle) and not isInCircle(pos, 25, center):
+                if mobility is None:
+                    mobility = rise.Mobility.EventList(pos)
+                else:
+                    mobility.addWaypoint(0.01 * (x+1) * (y+1), pos)
+    return mobility

@@ -36,7 +36,7 @@ class CreatorPlacerBuilder(object):
     terminals
     """
 
-    def __init__(self, bsCreator, bsPlacer, utCreator, utPlacer):
+    def __init__(self, bsCreator, bsPlacer, bsAntennaCreator, utCreator, utPlacer):
         """
         Initialize the scenario
 
@@ -55,12 +55,15 @@ class CreatorPlacerBuilder(object):
         assert isinstance(utCreator, scenarios.interfaces.INodeCreator)
         assert isinstance(utPlacer, scenarios.interfaces.INodePlacer)
 
-        newSimulator = openwns.simulator.OpenWNS()
-        newSimulator.simulationModel = openwns.node.NodeSimulationModel()
-        openwns.simulator.setSimulator(newSimulator)
+        if openwns.simulator.getSimulator() is None:
+            print "Creating new Simulator"
+            newSimulator = openwns.simulator.OpenWNS()
+            newSimulator.simulationModel = openwns.node.NodeSimulationModel()
+            openwns.simulator.setSimulator(newSimulator)
 
         self.bsCreator = bsCreator
         self.bsPlacer = bsPlacer
+        self.bsAntennaCreator = bsAntennaCreator
         self.utCreator = utCreator
         self.utPlacer = utPlacer
 
@@ -77,6 +80,7 @@ class CreatorPlacerBuilder(object):
             bsNode = self.bsCreator.create()
             assert isinstance(bsNode, scenarios.interfaces.INode)
             bsNode.setPosition(currentPosition)
+            bsNode.setAntenna(self.bsAntennaCreator.create())
             openwns.simulator.getSimulator().simulationModel.nodes.append(bsNode)
             self.bsNodes.append(bsNode)
 
