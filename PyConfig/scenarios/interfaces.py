@@ -103,3 +103,18 @@ class INodeCreator(openwns.interface.Interface):
         @return: The new node that was created
         """
         pass
+
+class IAntennaCreator(openwns.interface.Interface):
+    """
+    Defines the interface for Antenna creation strategies
+    """
+
+    @openwns.interface.abstractmethod
+    def create(self):
+        """"
+        Implement the strategy to build your Antenna here
+
+        @rtype: rise.Antenna.Antenna
+        @return: The new antenna that was created
+        """
+        pass
