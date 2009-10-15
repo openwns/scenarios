@@ -121,7 +121,7 @@ def createAreaScanMobility(steps, radius, center, corrAngle):
 
     for x in xrange(steps + 1):
         for y in xrange(steps + 1):
-            pos = openwns.geometry.position.Position(xMin + x * stepSize, yMin + y * stepSize, 1.5)
+            pos = openwns.geometry.position.Position(xMin + x * stepSize, yMin + y * stepSize, 0.0)
             if isInHexagon(pos, radius, center, corrAngle) and not isInCircle(pos, 25, center):
                 if mobility is None:
                     mobility = rise.Mobility.EventList(pos)
