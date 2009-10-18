@@ -66,3 +66,7 @@ class CircularPlacer(scenarios.interfaces.INodePlacer):
 
         return [p + self.center for p in positions]
 
+
+def isInCircle(position, radius, center):
+    vector = (position - center)
+    return vector.length() < radius

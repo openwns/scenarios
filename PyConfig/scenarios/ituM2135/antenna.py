@@ -28,6 +28,15 @@
 import rise.Antenna
 import scenarios.interfaces
 
+class IndoorHotspotAntennaCreator(scenarios.interfaces.IAntennaCreator):
+
+    def __init__(self):
+        pass
+
+    def create(self):
+        antenna = rise.Antenna.Isotropic([0.0, 0.0, 6.0])
+        return antenna
+
 class UrbanMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
 
     def __init__(self, azimuth):

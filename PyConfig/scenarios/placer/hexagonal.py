@@ -83,11 +83,6 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
 
         return [pos + self.center for pos in posList]
 
-
-def isInCircle(position, radius, center):
-    vector = (position - center)
-    return vector.length() < radius
-
 def isInHexagon(position, radius, center, corrAngle = 0.0):
     """ returns true if position is located within hexagon boundaries.
         Can be used to correct random placement of UTs within circle!=hexagon
@@ -112,6 +107,7 @@ def isInHexagon(position, radius, center, corrAngle = 0.0):
 
 def createAreaScanMobility(steps, radius, center, corrAngle):
     import rise.Mobility
+    from scenarios.placer.circular import isInCircle
     mobility = None
     radius = radius * 2 / math.sqrt(3)
     xMin = center.x - radius
