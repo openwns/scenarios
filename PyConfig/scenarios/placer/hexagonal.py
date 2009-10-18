@@ -105,7 +105,7 @@ def isInHexagon(position, radius, center, corrAngle = 0.0):
     #print "isInHexagon([%s],%d,[%s],%f): v=%s, l=%.3f a=%.3fdeg =>%s"%(position.toString(),radius,center.toString(),corrAngle,vector.toString(3),length,angleReduced*180/math.pi,isIn)
     return isIn
 
-def createAreaScanMobility(steps, radius, center, corrAngle):
+def createAreaScanMobility(steps, radius, minDistance, center, corrAngle):
     import rise.Mobility
     from scenarios.placer.circular import isInCircle
     mobility = None
@@ -118,7 +118,7 @@ def createAreaScanMobility(steps, radius, center, corrAngle):
     for x in xrange(steps + 1):
         for y in xrange(steps + 1):
             pos = openwns.geometry.position.Position(xMin + x * stepSize, yMin + y * stepSize, 0.0)
-            if isInHexagon(pos, radius, center, corrAngle) and not isInCircle(pos, 25, center):
+            if isInHexagon(pos, radius, center, corrAngle) and not isInCircle(pos, minDistance, center):
                 if mobility is None:
                     mobility = rise.Mobility.EventList(pos)
                 else:

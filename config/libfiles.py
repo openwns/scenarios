@@ -9,6 +9,8 @@ hppFiles = [
 pyconfigs = [
     'scenarios/__init__.py',
     'scenarios/interfaces.py',
+    'scenarios/antenna/__init__.py',
+    'scenarios/antenna/isotropic.py',
     'scenarios/placer/__init__.py',
     'scenarios/placer/hexagonal.py',
     'scenarios/placer/circular.py',

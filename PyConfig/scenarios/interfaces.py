@@ -53,6 +53,16 @@ class INode(openwns.interface.Interface):
         pass
 
     @openwns.interface.abstractmethod
+    def setAntenna(self, antenna):
+        """
+        Set the antenna for this node
+
+        @type antenna: rise.Antenna.Antenna
+        @param antenna: The Antenna that should be installed in this node
+        """
+        pass
+
+    @openwns.interface.abstractmethod
     def getNodeType(self):
         """
         Return the type of this node. Possible Values:

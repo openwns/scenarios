@@ -26,42 +26,13 @@
 ###############################################################################
 
 import rise.Antenna
-import scenarios.antenna.isotropic
 import scenarios.interfaces
 
-class IndoorHotspotAntennaCreator(scenarios.antenna.IsotropicAntennaCreator):
+class IsotropicAntennaCreator(scenarios.interfaces.IAntennaCreator):
 
-    def __init__(self):
-        scenarios.antenna.IsotropicAntennaCreator.__init__(self, [0.0, 0.0, 6.0])
-
-    def create(self):
-        antenna = scenarios.antenna.IsotropicAntennaCreator.create(self)
-        return antenna
-
-class UrbanMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
-
-    def __init__(self, azimuth):
-        self.azimuth = azimuth
+    def __init__(self, positionOffset):
+        self.positionOffset = positionOffset
 
     def create(self):
-        # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
-        downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
-
-        antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 25.0], self.azimuth, downtilt)
-        antenna.drawAntennaPattern = False
+        antenna = rise.Antenna.Isotropic(self.positionOffset)
         return antenna
-
-class RuralMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
-
-    def __init__(self, azimuth):
-        self.azimuth = azimuth
-
-    def create(self):
-        # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
-        downtilt = (6.0 + 90.0)/360.0 * 2 * 3.14159265
-
-        antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 35.0], self.azimuth, downtilt)
-        antenna.drawAntennaPattern = False
-        return antenna
-
-SuburbanMacroAntennaCreator = RuralMacroAntennaCreator

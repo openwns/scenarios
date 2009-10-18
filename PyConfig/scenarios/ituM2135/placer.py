@@ -52,3 +52,27 @@ class UrbanMacroBSPlacer(scenarios.interfaces.INodePlacer):
 
     def getPositions(self):
         return self.placer.getPositions()
+
+class RuralMacroBSPlacer(scenarios.interfaces.INodePlacer):
+
+    def __init__(self, numberOfCircles):
+        self.placer = scenarios.placer.HexagonalPlacer(numberOfCircles, interSiteDistance = 1732.0)
+        self.setCenter(openwns.geometry.position.Position(5000.0, 5000.0, 0.0))
+
+    def setCenter(self, position):
+        self.placer.setCenter(position)
+
+    def getPositions(self):
+        return self.placer.getPositions()
+
+class SuburbanMacroBSPlacer(scenarios.interfaces.INodePlacer):
+
+    def __init__(self, numberOfCircles):
+        self.placer = scenarios.placer.HexagonalPlacer(numberOfCircles, interSiteDistance = 1299.0)
+        self.setCenter(openwns.geometry.position.Position(5000.0, 5000.0, 0.0))
+
+    def setCenter(self, position):
+        self.placer.setCenter(position)
+
+    def getPositions(self):
+        return self.placer.getPositions()
