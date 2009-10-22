@@ -38,6 +38,19 @@ class IndoorHotspotAntennaCreator(scenarios.antenna.IsotropicAntennaCreator):
         antenna = scenarios.antenna.IsotropicAntennaCreator.create(self)
         return antenna
 
+class UrbanMicroAntennaCreator(scenarios.interfaces.IAntennaCreator):
+
+    def __init__(self, azimuth):
+        self.azimuth = azimuth
+
+    def create(self):
+        # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
+        downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
+
+        antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 10.0], self.azimuth, downtilt)
+        antenna.drawAntennaPattern = False
+        return antenna
+
 class UrbanMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
 
     def __init__(self, azimuth):

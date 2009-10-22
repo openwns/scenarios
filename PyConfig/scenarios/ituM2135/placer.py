@@ -42,6 +42,17 @@ class IndoorHotspotBSPlacer(scenarios.interfaces.INodePlacer):
         rightStation = openwns.geometry.position.Position(30.0, 0.0, 0.0)
         return [self.center + leftStation, self.center + rightStation]
 
+class UrbanMicroBSPlacer(scenarios.interfaces.INodePlacer):
+
+    def __init__(self, numberOfCircles):
+        self.placer = scenarios.placer.HexagonalPlacer(numberOfCircles, interSiteDistance = 200.0)
+
+    def setCenter(self, position):
+        self.placer.setCenter(position)
+
+    def getPositions(self):
+        return self.placer.getPositions()
+
 class UrbanMacroBSPlacer(scenarios.interfaces.INodePlacer):
 
     def __init__(self, numberOfCircles):
