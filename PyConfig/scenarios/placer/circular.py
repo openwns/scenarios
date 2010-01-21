@@ -27,7 +27,7 @@
 
 import scenarios.interfaces
 import openwns.geometry.position
-import math
+import math,random
 
 class CircularPlacer(scenarios.interfaces.INodePlacer):
     """
@@ -70,3 +70,46 @@ class CircularPlacer(scenarios.interfaces.INodePlacer):
 def isInCircle(position, radius, center):
     vector = (position - center)
     return vector.length() < radius
+
+
+
+class CircularAreaPlacer(scenarios.interfaces.INodePlacer):
+    """
+    Place a number of nodes on a circle with the given radius.
+    The placement will then be rotated by the rotate argument
+    """
+
+    def __init__(self, numberOfNodes, radius, rotate = 0.0):
+        """
+        @type  numberOfNodes: int
+        @param numberOfNodes: The number of nodes on the circle
+
+        @type  radius: float
+        @param radius: The radius is in Meters [m]
+
+        @type  rotate: float
+        @param rotate: Rotate the final result by rotate in radiant [0..2pi]
+        """
+
+        self.center = openwns.geometry.position.Position(x = 0.0, y = 0.0, z = 0.0)
+        self.numberOfNodes = numberOfNodes
+        self.radius = radius
+        self.rotate = rotate
+
+    def setCenter(self, center):
+        self.center = center
+
+    def getPositions(self):
+        positions = []
+        for s in xrange(self.numberOfNodes):
+            temp_angle = random.random() * 2.0 *math.pi
+            r = random.random() * self.radius
+            x = r * math.cos(temp_angle)
+            y = r * math.sin(temp_angle)
+            v = openwns.geometry.position.Vector(x = x, y = y, z = 0.0)
+            p = v.turn2D(self.rotate).toPosition()
+            positions.append(p)
+
+        return [p + self.center for p in positions]
+
+

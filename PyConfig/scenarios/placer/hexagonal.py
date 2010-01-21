@@ -27,7 +27,7 @@
 
 import scenarios.interfaces
 import openwns.geometry.position
-import math
+import math,random
 
 class HexagonalPlacer(scenarios.interfaces.INodePlacer):
 
@@ -83,6 +83,8 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
 
         return [pos + self.center for pos in posList]
 
+
+
 def isInHexagon(position, radius, center, corrAngle = 0.0):
     """ returns true if position is located within hexagon boundaries.
         Can be used to correct random placement of UTs within circle!=hexagon
@@ -124,3 +126,51 @@ def createAreaScanMobility(steps, radius, minDistance, center, corrAngle):
                 else:
                     mobility.addWaypoint(0.01 * (x+1) * (y+1), pos)
     return mobility
+                
+                
+                
+class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
+
+    def __init__(self, numberOfNodes, interSiteDistance, rotate = 0.0):
+        """ 
+        @type  numberOfCircles: int
+        @param numberOfCircles: The number of circles around the center cell
+
+        @type  interSiteDistance: float
+        @param interSiteDistance: The cell interSiteDistance is in Meters [m]
+
+        @type  rotate: float
+        @param rotate: Rotate the final result by rotate in radiant [0..2pi]
+        """
+        assert numberOfNodes >= 0
+        assert interSiteDistance > 0
+        assert 0 <= rotate <= 2.0*math.pi # rotates the final result by corrAngle
+
+        #self.numberOfCircles = numberOfCircles
+        self.interSiteDistance = interSiteDistance
+        self.numberOfNodes = numberOfNodes
+        self.rotate = rotate
+
+        self.center = openwns.geometry.position.Position(x = 1000.0 , y = 1000.0, z = 0.0)
+
+    def setCenter(self, center):
+        self.center = center
+
+    def _transformHexCoordinates(self, i, j, gridDistance):
+        return openwns.geometry.position.Vector(math.sqrt(3)/2.0*j,float(i)+0.5*float(j), 0.0)*gridDistance
+
+    def getPositions(self):
+        #centralBSPosition = openwns.geometry.position.Position(x = 0.0, y = 0.0, z = 0.0)
+        #posList = [centralBSPosition] # central BS position
+
+        positions = []
+        for s in xrange(self.numberOfNodes):
+            temp_angle = random.random() * math.pi/3.0;
+            i =  random.random() * self.interSiteDistance/(2.0 * math.cos(temp_angle - math.pi/6.0));
+            angle = float(int(random.random()*6.0)) * math.pi/3.0 + temp_angle;
+            v = openwns.geometry.position.Vector(x = i * math.cos(angle), y = i * math.sin(angle) , z = 0.0)
+            p = v.turn2D(self.rotate).toPosition()
+            positions.append(p)
+
+        return [pos + self.center for pos in positions]
+

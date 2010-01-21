@@ -27,6 +27,7 @@
 
 import scenarios.interfaces
 import openwns.geometry.position
+import math,random
 
 class RectangularPlacer(scenarios.interfaces.INodePlacer):
 
@@ -34,7 +35,7 @@ class RectangularPlacer(scenarios.interfaces.INodePlacer):
         self.w = w
         self.h = h
         self.rotate = rotate
-        self.center = openwns.position.Position(1000.0, 1000.0, 0.0)
+        self.center = openwns.geometry.position.Position(1000.0, 1000.0, 0.0)
 
     def setCenter(self, pos):
         self.center = pos
@@ -77,3 +78,28 @@ def createAreaScanMobility(stepsX, stepsY, w, h, center):
                 else:
                     mobility.addWaypoint(0.01 * (x+1) * (y+1), pos)
     return mobility
+
+
+class RectangularAreaPlacer(scenarios.interfaces.INodePlacer):
+
+    def __init__(self,numberOfNodes, w, h, rotate = 0.0):
+        self.numberOfNodes = numberOfNodes
+        self.w = w
+        self.h = h
+        self.rotate = rotate
+        self.center = openwns.geometry.position.Position(0.0, 0.0, 0.0)
+
+    def setCenter(self, pos):
+        self.center = pos
+
+    def getPositions(self):
+        positions = []
+        for s in xrange(self.numberOfNodes):
+            x = random.random() * self.w - self.w/2
+            y = random.random() * self.h - self.h/2
+            v = openwns.geometry.position.Vector(x=x , y=y , z = 0.0)
+
+            p = v.turn2D(self.rotate).toPosition()
+            positions.append(p)
+
+        return [pos + self.center for pos in positions]
