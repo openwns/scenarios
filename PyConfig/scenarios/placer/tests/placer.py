@@ -54,7 +54,6 @@ class RectangularAreaPlacerTest(unittest.TestCase):
         meanX = sum_x / self.count
         meanY = sum_y / self.count  
         
-        print abs(meanX),abs(meanY)
         self.assert_(abs(meanX) < 100.0 * self.tolerance)
         self.assert_(abs(meanY) < 100.0 * self.tolerance)
 
@@ -90,7 +89,6 @@ class HexagonalAreaPlacerTest(unittest.TestCase):
           
         meanX = sum_x / self.count
         meanY = sum_y / self.count  
-        print abs(meanX),abs(meanY)
          
         self.assert_(abs(meanX-1000.0) < 100.0 * self.tolerance)
         self.assert_(abs(meanY-1000.0) < 100.0 * self.tolerance)
