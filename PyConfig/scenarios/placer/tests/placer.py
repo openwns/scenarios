@@ -28,11 +28,16 @@
 import scenarios.placer
 import unittest
 import math
-# WARNING: This is a statistic test. There is always a probability it could fail! We tolerate 10% error
+# WARNING: This is a statistic test. There is always a probability it could fail! We tolerate 1% error
 # If you are sure everything is still OK: Increase "count"
+
+# info: for the mean tests, the reference value does not mean anything (like mean=0), so I take the range of uniform distribution and tolerance as
+# reference for the mean tests. like width and height for rectangular and interSiteDistance for hexagonal.
+
 class RectangularAreaPlacerTest(unittest.TestCase):
 
     count = 5E5
+    tolerance = 0.01
 
     def setUp(self):
         self.placer = scenarios.placer.RectangularAreaPlacer(int(self.count), 100, 100)
@@ -48,11 +53,10 @@ class RectangularAreaPlacerTest(unittest.TestCase):
           
         meanX = sum_x / self.count
         meanY = sum_y / self.count  
-          
-        #self.assertAlmostEqual(meanX, 0.0, 1)
-        #self.assertAlmostEqual(meanY, 0.0, 1)
-        assert(abs(meanX) < 1)
-        assert(abs(meanY) < 1)
+        
+        print abs(meanX),abs(meanY)
+        self.assert_(abs(meanX) < 100.0 * self.tolerance)
+        self.assert_(abs(meanY) < 100.0 * self.tolerance)
 
         sum_x2 = 0
         sum_y2 = 0
@@ -63,17 +67,15 @@ class RectangularAreaPlacerTest(unittest.TestCase):
         varX = sum_x2 / (self.count - 1)
         varY = sum_y2 / (self.count - 1)
 
-        #self.assertAlmostEqual(varX, 834.0, 4)
-        #self.assertAlmostEqual(varY, 834.0, 1)
-        assert(abs(varX- 834.0)<4)
-        assert(abs(varY- 834.0)<4)
+        self.assert_(abs(varX- 834.0)<834.0 * self.tolerance)
+        self.assert_(abs(varY- 834.0)<834.0 * self.tolerance)
 
 
 
 class HexagonalAreaPlacerTest(unittest.TestCase):
 
     count = 5E5
-
+    tolerance = 0.01
     def setUp(self):
         self.placer = scenarios.placer.HexagonalAreaPlacer(int(self.count), 100)
         
@@ -88,9 +90,10 @@ class HexagonalAreaPlacerTest(unittest.TestCase):
           
         meanX = sum_x / self.count
         meanY = sum_y / self.count  
-          
-        assert(abs(meanX-1000.0) < 1)
-        assert(abs(meanY-1000.0) < 1)
+        print abs(meanX),abs(meanY)
+         
+        self.assert_(abs(meanX-1000.0) < 100.0 * self.tolerance)
+        self.assert_(abs(meanY-1000.0) < 100.0 * self.tolerance)
 
         sum_x2 = 0
         sum_y2 = 0
@@ -101,5 +104,5 @@ class HexagonalAreaPlacerTest(unittest.TestCase):
         varX = sum_x2 / (self.count - 1)
         varY = sum_y2 / (self.count - 1)
 
-        assert(abs(varX- 694.0)<3)
-        assert(abs(varY- 694.0)<3)
+        self.assert_(abs(varX- 694.0)<694.0 * self.tolerance)
+        self.assert_(abs(varY- 694.0)<694.0 * self.tolerance)
