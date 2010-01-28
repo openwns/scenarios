@@ -164,13 +164,30 @@ class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
         #posList = [centralBSPosition] # central BS position
 
         positions = []
-        for s in xrange(self.numberOfNodes):
-            temp_angle = random.random() * math.pi/3.0;
-            i =  random.random() * self.interSiteDistance/(2.0 * math.cos(temp_angle - math.pi/6.0));
-            angle = float(int(random.random()*6.0)) * math.pi/3.0 + temp_angle;
-            v = openwns.geometry.position.Vector(x = i * math.cos(angle), y = i * math.sin(angle) , z = 0.0)
-            p = v.turn2D(self.rotate).toPosition()
-            positions.append(p)
+        #for s in xrange(self.numberOfNodes):
+            #temp_angle = random.random() * math.pi/3.0;
+            #i =  random.random() * self.interSiteDistance/(2.0 * math.cos(temp_angle - math.pi/6.0));
+            #angle = float(int(random.random()*6.0)) * math.pi/3.0 + temp_angle;
+            #v = openwns.geometry.position.Vector(x = i * math.cos(angle), y = i * math.sin(angle) , z = 0.0)
+            #p = v.turn2D(self.rotate).toPosition()
+            #positions.append(p)
+        
+        stationcounter = 0
+        while stationcounter < self.numberOfNodes:
+            x = random.random() * self.interSiteDistance * 2.0 / math.sqrt(3) - self.interSiteDistance / math.sqrt(3)
+            y = random.random() * self.interSiteDistance * 2.0 / math.sqrt(3) - self.interSiteDistance / math.sqrt(3)
+            ptemp =  openwns.geometry.position.Position(x=x, y=y, z=0.0)
+            #print "position.x= %f, y=%f,interSiteDistance=%d",x,y,self.interSiteDistance
+            if isInHexagon(position=ptemp, radius=self.interSiteDistance / math.sqrt(3), center=openwns.geometry.position.Position(0.0,0.0,0.0), corrAngle = self.rotate) == True:
+                v = openwns.geometry.position.Vector(x = x, y = y , z = 0.0)
+                p = v.turn2D(self.rotate).toPosition()
+                positions.append(p)
+                stationcounter=stationcounter +1
+                
+            else:
+                pass
+
+
 
         return [pos + self.center for pos in positions]
 
