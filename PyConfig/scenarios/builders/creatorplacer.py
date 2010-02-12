@@ -37,8 +37,8 @@ class CreatorPlacerBuilder(object):
     A scenario that consists of a single cell and an arbitrary number of user
     terminals
     """
-
-    def __init__(self, bsCreator, bsPlacer, bsAntennaCreator, utCreator, utPlacer):
+    
+    def __init__(self, bsCreator, bsPlacer, bsAntennaCreator, utCreator, utPlacer, enableCQI4Cells=[False, False, False, False, False, False, False]):
         """
         Initialize the scenario
 
@@ -56,6 +56,7 @@ class CreatorPlacerBuilder(object):
         assert isinstance(bsPlacer, scenarios.interfaces.INodePlacer)
         assert isinstance(utCreator, scenarios.interfaces.INodeCreator)
         assert isinstance(utPlacer, scenarios.interfaces.INodePlacer)
+        assert len(enableCQI4Cells) >= len(bsPlacer.getPositions())
 
         if openwns.simulator.getSimulator() is None:
             print "Creating new Simulator"
@@ -72,13 +73,20 @@ class CreatorPlacerBuilder(object):
         self.bsNodes = []
         self.utNodes = []
 
+        self.enableCQI4Cells = enableCQI4Cells
+        self.offsetCQI4Cell = 0
+
         self._createBaseStations()
         self._createUserTerminals()
 
     def _createBaseStations(self):
         self.bsPositions = self.bsPlacer.getPositions()
 
+        self.indexCQI4Cell = 0
         for currentPosition in self.bsPositions:
+            # check if BSs belong to the cell, which use or not use CQI
+            self.bsCreator.enableCQIMeasurement = self.enableCQI4Cells[self.indexCQI4Cell]
+            self.indexCQI4Cell = self.indexCQI4Cell + 1
             bsNode = self.bsCreator.create()
             assert isinstance(bsNode, scenarios.interfaces.INode)
             bsNode.setPosition(currentPosition)
@@ -94,7 +102,24 @@ class CreatorPlacerBuilder(object):
             self.utPlacer.setCenter(offset)
             self.utPositions += self.utPlacer.getPositions()
 
+        #check if ue exists
+        if len(self.utPositions) == 0:
+            self.offsetCQI4Cell = 0
+        else:
+            self.offsetCQI4Cell = self.utPlacer.numberOfNodes
+        self.counterCQI4Cell = self.offsetCQI4Cell
+        self.indexCQI4Cell = 0
+        statusOfCQIInCell = None
         for currentPosition in self.utPositions:
+            # check if UTs belong to the cell, which use or not use CQI
+            if self.counterCQI4Cell == self.offsetCQI4Cell:
+                self.utCreator.enableCQIMeasurement = self.enableCQI4Cells[self.indexCQI4Cell]
+                statusOfCQIInCell = self.utCreator.enableCQIMeasurement
+                self.indexCQI4Cell = self.indexCQI4Cell + 1
+                self.offsetCQI4Cell = self.offsetCQI4Cell + self.utPlacer.numberOfNodes
+            else:
+                self.utCreator.enableCQIMeasurement = statusOfCQIInCell
+            self.counterCQI4Cell = self.counterCQI4Cell + 1
             utNode = self.utCreator.create()
             assert isinstance(utNode, scenarios.interfaces.INode)
             utNode.setPosition(currentPosition)
