@@ -45,9 +45,8 @@ class IndoorHotspotBSPlacer(scenarios.interfaces.INodePlacer):
 class IndoorHotspotUEPlacer(scenarios.interfaces.INodePlacer):
 
     def __init__(self, numberOfNodes):
-        self.numberOfNodes = numberOfNodes
         self.placer = scenarios.placer.RectangularAreaPlacer(numberOfNodes, w=60.0, h=50.0)
-        
+
     def setCenter(self, position):
         self.placer.setCenter(position)
 
