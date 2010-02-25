@@ -40,7 +40,7 @@ class RectangularAreaPlacerTest(unittest.TestCase):
     tolerance = 0.01
 
     def setUp(self):
-        self.placer = scenarios.placer.RectangularAreaPlacer(int(self.count), 100, 100)
+        self.placer = scenarios.placer.RectangularAreaPlacer(int(self.count), 100, 100, 10)
         
     def testMeanVar(self):
         pos = self.placer.getPositions()
@@ -66,8 +66,8 @@ class RectangularAreaPlacerTest(unittest.TestCase):
         varX = sum_x2 / (self.count - 1)
         varY = sum_y2 / (self.count - 1)
 
-        self.assert_(abs(varX- 834.0)<834.0 * self.tolerance)
-        self.assert_(abs(varY- 834.0)<834.0 * self.tolerance)
+        self.assert_(abs(varX- 856.0)<834.0 * self.tolerance)
+        self.assert_(abs(varY- 856.0)<834.0 * self.tolerance)
 
 
 
@@ -76,7 +76,7 @@ class HexagonalAreaPlacerTest(unittest.TestCase):
     count = 5E5
     tolerance = 0.01
     def setUp(self):
-        self.placer = scenarios.placer.HexagonalAreaPlacer(int(self.count), 100)
+        self.placer = scenarios.placer.HexagonalAreaPlacer(int(self.count), 100, 10)
         
     def testMeanVar(self):
         pos = self.placer.getPositions()
@@ -102,5 +102,6 @@ class HexagonalAreaPlacerTest(unittest.TestCase):
         varX = sum_x2 / (self.count - 1)
         varY = sum_y2 / (self.count - 1)
 
-        self.assert_(abs(varX- 694.0)<694.0 * self.tolerance)
-        self.assert_(abs(varY- 694.0)<694.0 * self.tolerance)
+
+        self.assert_(abs(varX- 720.0)<720.0 * self.tolerance)
+        self.assert_(abs(varY- 720.0)<720.0 * self.tolerance)

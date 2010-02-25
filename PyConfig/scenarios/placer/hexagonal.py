@@ -131,7 +131,7 @@ def createAreaScanMobility(steps, radius, minDistance, center, corrAngle):
                 
 class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
 
-    def __init__(self, numberOfNodes, interSiteDistance, rotate = 0.0):
+    def __init__(self, numberOfNodes, interSiteDistance, minDistance, rotate = 0.0):
         """ 
         @type  numberOfCircles: int
         @param numberOfCircles: The number of circles around the center cell
@@ -150,6 +150,7 @@ class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
         self.interSiteDistance = interSiteDistance
         self.numberOfNodes = numberOfNodes
         self.rotate = rotate
+        self.minDistance = minDistance
 
         self.center = openwns.geometry.position.Position(x = 1000.0 , y = 1000.0, z = 0.0)
 
@@ -179,10 +180,11 @@ class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
             ptemp =  openwns.geometry.position.Position(x=x, y=y, z=0.0)
             #print "position.x= %f, y=%f,interSiteDistance=%d",x,y,self.interSiteDistance
             if isInHexagon(position=ptemp, radius=self.interSiteDistance / math.sqrt(3), center=openwns.geometry.position.Position(0.0,0.0,0.0), corrAngle = self.rotate) == True:
-                v = openwns.geometry.position.Vector(x = x, y = y , z = 0.0)
-                p = v.turn2D(self.rotate).toPosition()
-                positions.append(p)
-                stationcounter=stationcounter +1
+                if x*x + y*y > self.minDistance*self.minDistance:
+                    v = openwns.geometry.position.Vector(x = x, y = y , z = 0.0)
+                    p = v.turn2D(self.rotate).toPosition()
+                    positions.append(p)
+                    stationcounter=stationcounter +1
                 
             else:
                 pass

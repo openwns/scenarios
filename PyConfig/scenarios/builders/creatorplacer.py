@@ -108,7 +108,7 @@ class CreatorPlacerBuilderIndoorHotspot(CreatorPlacerBuilder):
       super(CreatorPlacerBuilderIndoorHotspot, self).__init__(bsCreator,  
                                                               scenarios.ituM2135.IndoorHotspotBSPlacer(), 
                                                               bsAntennaCreator, utCreator, 
-                                                              scenarios.ituM2135.IndoorHotspotUEPlacer(numberOfNodes))
+                                                              scenarios.ituM2135.IndoorHotspotUEPlacer(numberOfNodes, minDistance=10))
 
 
 class CreatorPlacerBuilderUrbanMicro(CreatorPlacerBuilder):
@@ -118,7 +118,7 @@ class CreatorPlacerBuilderUrbanMicro(CreatorPlacerBuilder):
                                                            scenarios.ituM2135. UrbanMicroBSPlacer(numberOfCircles),
                                                            bsAntennaCreator, 
                                                            utCreator, 
-                                                           scenarios.ituM2135.UrbanMicroUEPlacer(numberOfNodes))
+                                                           scenarios.ituM2135.UrbanMicroUEPlacer(numberOfNodes, minDistance=10))
 
 
 class CreatorPlacerBuilderUrbanMacro(CreatorPlacerBuilder):
@@ -128,7 +128,7 @@ class CreatorPlacerBuilderUrbanMacro(CreatorPlacerBuilder):
                                                            scenarios.ituM2135.UrbanMacroBSPlacer(numberOfCircles), 
                                                            bsAntennaCreator, 
                                                            utCreator, 
-                                                           scenarios.ituM2135.UrbanMacroUEPlacer(numberOfNodes))
+                                                           scenarios.ituM2135.UrbanMacroUEPlacer(numberOfNodes, minDistance=10))
 
 class CreatorPlacerBuilderRuralMacro(CreatorPlacerBuilder):
 
@@ -137,7 +137,7 @@ class CreatorPlacerBuilderRuralMacro(CreatorPlacerBuilder):
                                                            scenarios.ituM2135.RuralMacroBSPlacer(numberOfCircles),
                                                            bsAntennaCreator, 
                                                            utCreator, 
-                                                           scenarios.ituM2135.RuralMacroUEPlacer(numberOfNodes))
+                                                           scenarios.ituM2135.RuralMacroUEPlacer(numberOfNodes, minDistance=10))
 
 class CreatorPlacerBuilderSuburbanMacro(CreatorPlacerBuilder):
 
@@ -146,5 +146,5 @@ class CreatorPlacerBuilderSuburbanMacro(CreatorPlacerBuilder):
                                                               scenarios.ituM2135.SuburbanMacroBSPlacer(numberOfCircles), 
                                                               bsAntennaCreator, 
                                                               utCreator, 
-                                                              scenarios.ituM2135.SuburbanMacroUEPlacer(numberOfNodes))
+                                                              scenarios.ituM2135.SuburbanMacroUEPlacer(numberOfNodes, minDistance=10))
 

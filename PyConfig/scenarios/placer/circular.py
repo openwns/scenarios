@@ -79,7 +79,7 @@ class CircularAreaPlacer(scenarios.interfaces.INodePlacer):
     The placement will then be rotated by the rotate argument
     """
 
-    def __init__(self, numberOfNodes, radius, rotate = 0.0):
+    def __init__(self, numberOfNodes, radius, minDistance, rotate = 0.0):
         """
         @type  numberOfNodes: int
         @param numberOfNodes: The number of nodes on the circle
@@ -95,20 +95,24 @@ class CircularAreaPlacer(scenarios.interfaces.INodePlacer):
         self.numberOfNodes = numberOfNodes
         self.radius = radius
         self.rotate = rotate
-
+        self.minDistance = minDistance
     def setCenter(self, center):
         self.center = center
 
     def getPositions(self):
         positions = []
+
+
+        stationcounter = 0
         for s in xrange(self.numberOfNodes):
             temp_angle = random.random() * 2.0 *math.pi
-            r = random.random() * self.radius
+            r = random.random() * (self.radius - self.minDistance) + self.minDistance
             x = r * math.cos(temp_angle)
             y = r * math.sin(temp_angle)
             v = openwns.geometry.position.Vector(x = x, y = y, z = 0.0)
             p = v.turn2D(self.rotate).toPosition()
             positions.append(p)
+            stationcounter=stationcounter +1
 
         return [p + self.center for p in positions]
 

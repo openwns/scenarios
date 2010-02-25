@@ -82,24 +82,29 @@ def createAreaScanMobility(stepsX, stepsY, w, h, center):
 
 class RectangularAreaPlacer(scenarios.interfaces.INodePlacer):
 
-    def __init__(self,numberOfNodes, w, h, rotate = 0.0):
+    def __init__(self, numberOfNodes, w, h, minDistance, rotate = 0.0):
         self.numberOfNodes = numberOfNodes
         self.w = w
         self.h = h
         self.rotate = rotate
         self.center = openwns.geometry.position.Position(0.0, 0.0, 0.0)
-
+        self.minDistance = minDistance
     def setCenter(self, pos):
         self.center = pos
 
     def getPositions(self):
         positions = []
-        for s in xrange(self.numberOfNodes):
+        stationcounter = 0
+        while stationcounter < self.numberOfNodes:
             x = random.random() * self.w - self.w/2
             y = random.random() * self.h - self.h/2
-            v = openwns.geometry.position.Vector(x=x , y=y , z = 0.0)
+            if x*x + y*y > self.minDistance*self.minDistance:
+                 
+                v = openwns.geometry.position.Vector(x=x , y=y , z = 0.0)
 
-            p = v.turn2D(self.rotate).toPosition()
-            positions.append(p)
+                p = v.turn2D(self.rotate).toPosition()
+                positions.append(p)
+
+                stationcounter = stationcounter + 1
 
         return [pos + self.center for pos in positions]
