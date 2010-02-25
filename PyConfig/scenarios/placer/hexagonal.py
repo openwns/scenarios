@@ -90,7 +90,6 @@ def isInHexagon(position, radius, center, corrAngle = 0.0):
         Can be used to correct random placement of UTs within circle!=hexagon
     """
     assert 0 <= corrAngle <= 2.0*math.pi   # rotates hexagon by corrAngle. 0=radius to the right, flat top
-    #print "isInHexagon([%s],%d,[%s],%f) ?"%(position.toString(),radius,center.toString(),corrAngle)
     vector = (position-center)/radius      # from center to position; normalized
     length = vector.length2D()
     cos30deg = 0.86602540378443865         # =cos(30deg)=sin(60deg)
@@ -104,7 +103,6 @@ def isInHexagon(position, radius, center, corrAngle = 0.0):
     y = length*math.sin(angleReduced)
     maxy = (1.0-x)*2.0*cos30deg
     isIn = (y<=maxy)
-    #print "isInHexagon([%s],%d,[%s],%f): v=%s, l=%.3f a=%.3fdeg =>%s"%(position.toString(),radius,center.toString(),corrAngle,vector.toString(3),length,angleReduced*180/math.pi,isIn)
     return isIn
 
 def createAreaScanMobility(steps, radius, minDistance, center, corrAngle):
@@ -146,7 +144,6 @@ class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
         assert interSiteDistance > 0
         assert 0 <= rotate <= 2.0*math.pi # rotates the final result by corrAngle
 
-        #self.numberOfCircles = numberOfCircles
         self.interSiteDistance = interSiteDistance
         self.numberOfNodes = numberOfNodes
         self.rotate = rotate
@@ -161,24 +158,13 @@ class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
         return openwns.geometry.position.Vector(math.sqrt(3)/2.0*j,float(i)+0.5*float(j), 0.0)*gridDistance
 
     def getPositions(self):
-        #centralBSPosition = openwns.geometry.position.Position(x = 0.0, y = 0.0, z = 0.0)
-        #posList = [centralBSPosition] # central BS position
 
         positions = []
-        #for s in xrange(self.numberOfNodes):
-            #temp_angle = random.random() * math.pi/3.0;
-            #i =  random.random() * self.interSiteDistance/(2.0 * math.cos(temp_angle - math.pi/6.0));
-            #angle = float(int(random.random()*6.0)) * math.pi/3.0 + temp_angle;
-            #v = openwns.geometry.position.Vector(x = i * math.cos(angle), y = i * math.sin(angle) , z = 0.0)
-            #p = v.turn2D(self.rotate).toPosition()
-            #positions.append(p)
-        
         stationcounter = 0
         while stationcounter < self.numberOfNodes:
             x = random.random() * self.interSiteDistance * 2.0 / math.sqrt(3) - self.interSiteDistance / math.sqrt(3)
             y = random.random() * self.interSiteDistance * 2.0 / math.sqrt(3) - self.interSiteDistance / math.sqrt(3)
             ptemp =  openwns.geometry.position.Position(x=x, y=y, z=0.0)
-            #print "position.x= %f, y=%f,interSiteDistance=%d",x,y,self.interSiteDistance
             if isInHexagon(position=ptemp, radius=self.interSiteDistance / math.sqrt(3), center=openwns.geometry.position.Position(0.0,0.0,0.0), corrAngle = self.rotate) == True:
                 if x*x + y*y > self.minDistance*self.minDistance:
                     v = openwns.geometry.position.Vector(x = x, y = y , z = 0.0)
