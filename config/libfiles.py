@@ -31,6 +31,10 @@ pyconfigs = [
     'scenarios/toolsupport/pytreevisitors/__init__.py',
     'scenarios/toolsupport/pytreevisitors/builders/__init__.py',
     'scenarios/toolsupport/pytreevisitors/builders/creatorplacer.py',
+    'scenarios/binding/__init__.py',
+    'scenarios/binding/binding.py',
+    'scenarios/scenariosets/__init__.py',
+    'scenarios/scenariosets/scenariosets.py',
 ]
 
 dependencies = []

@@ -36,45 +36,104 @@ class IndoorHotspotAntennaCreator(scenarios.antenna.IsotropicAntennaCreator):
 
     def create(self):
         antenna = scenarios.antenna.IsotropicAntennaCreator.create(self)
-        return antenna
+        return [antenna]
+
+    def getAntenna(self):
+        antenna = scenarios.antenna.IsotropicAntennaCreator.create(self)
+        return [antenna]
+
 
 class UrbanMicroAntennaCreator(scenarios.interfaces.IAntennaCreator):
 
-    def __init__(self, azimuth):
-        self.azimuth = azimuth
-
+    def __init__(self, sectorization):
+        self.sectorization = sectorization
+        self.antennalist = []
+        if self.sectorization == True:
+            self.azimuth = [30.0* 2.0 * 3.14 / 360.0, 150.0* 2.0 * 3.14 / 360.0, 270.0* 2.0 * 3.14 / 360.0]
+        else:
+            self.azimuth = [0.0]
     def create(self):
         # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
         downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
+        for azimuth in self.azimuth:
+            antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 10.0], azimuth, downtilt)
+            antenna.drawAntennaPattern = False
+            self.antennalist.append(antenna)
+        return self.antennalist
 
-        antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 10.0], self.azimuth, downtilt)
-        antenna.drawAntennaPattern = False
-        return antenna
+    def getAntenna(self):
+        # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
+        downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
+        for azimuth in self.azimuth:
+            antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 10.0], azimuth, downtilt)
+            antenna.drawAntennaPattern = False
+            self.antennalist.append(antenna)
+        return self.antennalist
+
+
 
 class UrbanMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
 
-    def __init__(self, azimuth):
-        self.azimuth = azimuth
+    def __init__(self, sectorization):
+        self.sectorization = sectorization
+        self.antennalist = []
+        if self.sectorization == True:
+            self.azimuth = [30.0* 2.0 * 3.14 / 360.0, 150.0* 2.0 * 3.14 / 360.0, 270.0* 2.0 * 3.14 / 360.0]
+        else:
+            self.azimuth = [0.0]
 
     def create(self):
         # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
         downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
 
-        antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 25.0], self.azimuth, downtilt)
-        antenna.drawAntennaPattern = False
-        return antenna
+        for azimuth in self.azimuth:
+            antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 25.0], azimuth, downtilt)
+            antenna.drawAntennaPattern = False
+            self.antennalist.append(antenna)
+        return self.antennalist
+
+    def getAntenna(self):
+        # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
+        downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
+
+        for azimuth in self.azimuth:
+
+            antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 25.0], azimuth, downtilt)
+            antenna.drawAntennaPattern = False
+            self.antennalist.append(antenna)
+        return self.antennalist
+
+
 
 class RuralMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
 
-    def __init__(self, azimuth):
-        self.azimuth = azimuth
+    def __init__(self, sectorization):
+        self.sectorization = sectorization
+        self.antennalist = []
+        if self.sectorization == True:
+            self.azimuth = [30.0* 2.0 * 3.14 / 360.0, 150.0* 2.0 * 3.14 / 360.0, 270.0* 2.0 * 3.14 / 360.0]
+        else:
+            self.azimuth = [0.0]
 
     def create(self):
         # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
         downtilt = (6.0 + 90.0)/360.0 * 2 * 3.14159265
 
-        antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 35.0], self.azimuth, downtilt)
-        antenna.drawAntennaPattern = False
-        return antenna
+        for azimuth in self.azimuth:
+            antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 35.0], azimuth, downtilt)
+            antenna.drawAntennaPattern = False
+            self.antennalist.append(antenna)
+        return self.antennalist
+
+    def getAntenna(self):
+        # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
+        downtilt = (6.0 + 90.0)/360.0 * 2 * 3.14159265
+
+        for azimuth in self.azimuth:
+            antenna = rise.Antenna.ITU("17.0 dB", [0.0, 0.0, 35.0], azimuth, downtilt)
+            antenna.drawAntennaPattern = False
+            self.antennalist.append(antenna)
+        return self.antennalist
+
 
 SuburbanMacroAntennaCreator = RuralMacroAntennaCreator

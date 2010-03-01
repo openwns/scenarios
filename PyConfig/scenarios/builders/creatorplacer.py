@@ -76,15 +76,17 @@ class CreatorPlacerBuilder(object):
         self._createUserTerminals()
 
     def _createBaseStations(self):
-        self.bsPositions = self.bsPlacer.getPositions()
+        for antenna in self.bsAntennaCreator.getAntenna():
 
-        for currentPosition in self.bsPositions:
-            bsNode = self.bsCreator.create()
-            assert isinstance(bsNode, scenarios.interfaces.INode)
-            bsNode.setPosition(currentPosition)
-            bsNode.setAntenna(self.bsAntennaCreator.create())
-            openwns.simulator.getSimulator().simulationModel.nodes.append(bsNode)
-            self.bsNodes.append(bsNode)
+            self.bsPositions = self.bsPlacer.getPositions()
+
+            for currentPosition in self.bsPositions:
+                bsNode = self.bsCreator.create()
+                assert isinstance(bsNode, scenarios.interfaces.INode)
+                bsNode.setPosition(currentPosition)
+                bsNode.setAntenna(antenna)
+                openwns.simulator.getSimulator().simulationModel.nodes.append(bsNode)
+                self.bsNodes.append(bsNode)
 
     def _createUserTerminals(self):
         self.utPositions = []
@@ -104,47 +106,50 @@ class CreatorPlacerBuilder(object):
 
 class CreatorPlacerBuilderIndoorHotspot(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, bsAntennaCreator, utCreator, numberOfNodes = 10):
+    def __init__(self, bsCreator,  utCreator, numberOfNodes = 10):
       super(CreatorPlacerBuilderIndoorHotspot, self).__init__(bsCreator,  
                                                               scenarios.ituM2135.IndoorHotspotBSPlacer(), 
-                                                              bsAntennaCreator, utCreator, 
+                                                              scenarios.ituM2135.IndoorHotspotAntennaCreator(), 
+                                                              utCreator, 
                                                               scenarios.ituM2135.IndoorHotspotUEPlacer(numberOfNodes, minDistance=10))
 
 
 class CreatorPlacerBuilderUrbanMicro(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, bsAntennaCreator, utCreator, numberOfCircles = 2, numberOfNodes = 10):
+    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 10):
       super(CreatorPlacerBuilderUrbanMicro, self).__init__(bsCreator,  
                                                            scenarios.ituM2135. UrbanMicroBSPlacer(numberOfCircles),
-                                                           bsAntennaCreator, 
+                                                           scenarios.ituM2135.UrbanMicroAntennaCreator(sectorization), 
                                                            utCreator, 
                                                            scenarios.ituM2135.UrbanMicroUEPlacer(numberOfNodes, minDistance=10))
 
 
+
+
 class CreatorPlacerBuilderUrbanMacro(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, bsAntennaCreator, utCreator, numberOfCircles = 2, numberOfNodes = 10):
+    def __init__(self, bsCreator, utCreator, sectorization,  numberOfCircles = 2, numberOfNodes = 10):
       super(CreatorPlacerBuilderUrbanMacro, self).__init__(bsCreator,  
                                                            scenarios.ituM2135.UrbanMacroBSPlacer(numberOfCircles), 
-                                                           bsAntennaCreator, 
+                                                           scenarios.ituM2135.UrbanMacroAntennaCreator(sectorization), 
                                                            utCreator, 
                                                            scenarios.ituM2135.UrbanMacroUEPlacer(numberOfNodes, minDistance=10))
 
 class CreatorPlacerBuilderRuralMacro(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, bsAntennaCreator, utCreator, numberOfCircles = 2, numberOfNodes = 10):
+    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 10):
       super(CreatorPlacerBuilderRuralMacro, self).__init__(bsCreator,  
                                                            scenarios.ituM2135.RuralMacroBSPlacer(numberOfCircles),
-                                                           bsAntennaCreator, 
+                                                           scenarios.ituM2135.RuralMacroAntennaCreator(sectorization), 
                                                            utCreator, 
                                                            scenarios.ituM2135.RuralMacroUEPlacer(numberOfNodes, minDistance=10))
 
 class CreatorPlacerBuilderSuburbanMacro(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, bsAntennaCreator, utCreator, numberOfCircles = 2, numberOfNodes = 10):
+    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 10):
       super(CreatorPlacerBuilderSuburbanMacro, self).__init__(bsCreator,  
                                                               scenarios.ituM2135.SuburbanMacroBSPlacer(numberOfCircles), 
-                                                              bsAntennaCreator, 
+                                                              scenarios.ituM2135.SuburbanMacroAntennaCreator(sectorization), 
                                                               utCreator, 
                                                               scenarios.ituM2135.SuburbanMacroUEPlacer(numberOfNodes, minDistance=10))
 

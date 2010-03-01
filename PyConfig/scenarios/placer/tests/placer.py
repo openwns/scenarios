@@ -66,8 +66,8 @@ class RectangularAreaPlacerTest(unittest.TestCase):
         varX = sum_x2 / (self.count - 1)
         varY = sum_y2 / (self.count - 1)
 
-        self.assert_(abs(varX- 856.0)<834.0 * self.tolerance)
-        self.assert_(abs(varY- 856.0)<834.0 * self.tolerance)
+        self.assert_(abs(varX- 856.0)<856.0 * self.tolerance)
+        self.assert_(abs(varY- 856.0)<856.0 * self.tolerance)
 
 
 
@@ -102,6 +102,41 @@ class HexagonalAreaPlacerTest(unittest.TestCase):
         varX = sum_x2 / (self.count - 1)
         varY = sum_y2 / (self.count - 1)
 
-
         self.assert_(abs(varX- 720.0)<720.0 * self.tolerance)
         self.assert_(abs(varY- 720.0)<720.0 * self.tolerance)
+
+
+
+
+class CircularAreaPlacerTest(unittest.TestCase):
+
+    count = 5E5
+    tolerance = 0.01
+    def setUp(self):
+        self.placer = scenarios.placer.CircularAreaPlacer(int(self.count), 100)
+        
+    def testMeanVar(self):
+        pos = self.placer.getPositions()
+        
+        sum_x = 0
+        sum_y = 0
+        for p in pos:
+          sum_x = sum_x + p.x
+          sum_y = sum_y + p.y
+          
+        meanX = sum_x / self.count
+        meanY = sum_y / self.count  
+         
+        self.assert_(abs(meanX) < 100.0 * self.tolerance)
+        self.assert_(abs(meanY) < 100.0 * self.tolerance)
+
+        sum_x2 = 0
+        sum_y2 = 0
+        for p in pos:
+            sum_x2 = sum_x2 + (p.x - meanX) * (p.x - meanX)
+            sum_y2 = sum_y2 + (p.y - meanY) * (p.y - meanY)
+        
+        varX = sum_x2 / (self.count - 1)
+        varY = sum_y2 / (self.count - 1)
+        self.assert_(abs(varX- 2520.0)<2520.0 * self.tolerance)
+        self.assert_(abs(varY- 2520.0)<2520.0 * self.tolerance)

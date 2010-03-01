@@ -27,7 +27,7 @@
 
 import openwns.simulator
 import constanze.traffic
-
+import scenarios.binding
 class CBR:
 
     def __init__(self, offset, trafficRate, packetSize, loggerRetriever = lambda node: node.logger):
@@ -44,18 +44,21 @@ class CBR:
 
 class VoIP:
 
-    def __init__(self, offset, direction='DL', loggerRetriever = lambda node: node.logger):
+    def __init__(self, offset, loggerRetriever = lambda node: node.logger):
         self.offset = offset
-        self.direction = direction
         self.loggerRetriever = loggerRetriever
 
     def create(self, node):
         return constanze.traffic.VoIP(offset = self.offset,
-                                      direction = self.direction,
                                       parentLogger = self.loggerRetriever(node))
 
-def addTraffic(bindingCreator, loadCreator):
+def addTraffic(bindingCreator,loadCreator, direction="UL"):
     ueNodes = openwns.simulator.getSimulator().simulationModel.getNodesByType("UE")
 
     for ue in ueNodes:
-        ue.addTraffic(bindingCreator.create(ue), loadCreator.create(ue))
+        if direction=="UL":
+            ue.addTraffic(bindingCreator.create(ue), loadCreator.create(ue))
+        if direction == "DL":
+            rang = openwns.simulator.getSimulator().simulationModel.getNodesByType("RANG")[0]
+
+            rang.addTraffic(bindingCreator.createDL(ue), loadCreator.create(rang))
