@@ -113,7 +113,7 @@ class CircularAreaPlacerTest(unittest.TestCase):
     count = 5E5
     tolerance = 0.01
     def setUp(self):
-        self.placer = scenarios.placer.CircularAreaPlacer(int(self.count), 100)
+        self.placer = scenarios.placer.CircularAreaPlacer(int(self.count), 100, 10)
         
     def testMeanVar(self):
         pos = self.placer.getPositions()
