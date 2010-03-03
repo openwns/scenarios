@@ -36,11 +36,11 @@ class IndoorHotspotAntennaCreator(scenarios.antenna.IsotropicAntennaCreator):
 
     def create(self):
         antenna = scenarios.antenna.IsotropicAntennaCreator.create(self)
-        return [antenna]
+        return antenna
 
     def getAntenna(self):
         antenna = scenarios.antenna.IsotropicAntennaCreator.create(self)
-        return [antenna]
+        return antenna
 
 
 class UrbanMicroAntennaCreator(scenarios.interfaces.IAntennaCreator):

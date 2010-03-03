@@ -76,7 +76,7 @@ class CreatorPlacerBuilder(object):
         self._createUserTerminals()
 
     def _createBaseStations(self):
-        for antenna in self.bsAntennaCreator.getAntenna():
+        for antenna in self.bsAntennaCreator.create():
 
             self.bsPositions = self.bsPlacer.getPositions()
 
