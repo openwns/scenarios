@@ -28,6 +28,7 @@
 import scenarios.placer
 import unittest
 import math
+import random
 # WARNING: This is a statistic test. There is always a probability it could fail! We tolerate 1% error
 # If you are sure everything is still OK: Increase "count"
 
@@ -41,6 +42,7 @@ class RectangularAreaPlacerTest(unittest.TestCase):
 
     def setUp(self):
         self.placer = scenarios.placer.RectangularAreaPlacer(int(self.count), 100, 100, 10)
+	random.seed(1234)
         
     def testMeanVar(self):
         pos = self.placer.getPositions()
