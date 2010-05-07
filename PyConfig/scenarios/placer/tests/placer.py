@@ -42,7 +42,7 @@ class RectangularAreaPlacerTest(unittest.TestCase):
 
     def setUp(self):
         self.placer = scenarios.placer.RectangularAreaPlacer(int(self.count), 100, 100, 10)
-	random.seed(1234)
+        random.seed(1234)
         
     def testMeanVar(self):
         pos = self.placer.getPositions()
@@ -79,6 +79,7 @@ class HexagonalAreaPlacerTest(unittest.TestCase):
     tolerance = 0.01
     def setUp(self):
         self.placer = scenarios.placer.HexagonalAreaPlacer(int(self.count), 100, 10)
+        random.seed(1234)
         
     def testMeanVar(self):
         pos = self.placer.getPositions()
@@ -116,6 +117,7 @@ class CircularAreaPlacerTest(unittest.TestCase):
     tolerance = 0.01
     def setUp(self):
         self.placer = scenarios.placer.CircularAreaPlacer(int(self.count), 100, 10)
+        random.seed(1234)
         
     def testMeanVar(self):
         pos = self.placer.getPositions()
