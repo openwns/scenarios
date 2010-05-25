@@ -53,12 +53,9 @@ class VoIP:
                                       parentLogger = self.loggerRetriever(node))
 
 def addTraffic(bindingCreator,loadCreator, direction="UL"):
-    ueNodes = openwns.simulator.getSimulator().simulationModel.getNodesByType("UE")
-
+    ueNodes = openwns.simulator.getSimulator().simulationModel.getNodesByProperty("Type", "UE")
+ 
     for ue in ueNodes:
         if direction=="UL":
             ue.addTraffic(bindingCreator.create(ue), loadCreator.create(ue))
-        if direction == "DL":
-            rang = openwns.simulator.getSimulator().simulationModel.getNodesByType("RANG")[0]
 
-            rang.addTraffic(bindingCreator.createDL(ue), loadCreator.create(rang))

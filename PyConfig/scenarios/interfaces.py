@@ -63,18 +63,23 @@ class INode(openwns.interface.Interface):
         pass
 
     @openwns.interface.abstractmethod
-    def getNodeType(self):
+    def getProperty(self, propertyName):
         """
-        Return the type of this node. Possible Values:
+        Return the property value of this node.
 
-        BS : Base Station
-        UE : User Terminal
-        RN : Relay Node
-
-        @rtype: str
-        @return: The node type as a string
+        @rtype: all types are possible
+        @return: the property value with given property name of this node
         """
         pass
+
+    @openwns.interface.abstractmethod
+    def setProperty(self, propertyName, propertyValue):
+        """
+        set the property value of this node.
+
+        """
+        pass
+
 
 class INodePlacer(openwns.interface.Interface):
     """
