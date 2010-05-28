@@ -111,12 +111,12 @@ class CreatorPlacerBuilderIndoorHotspot(CreatorPlacerBuilder):
                                                               scenarios.ituM2135.IndoorHotspotBSPlacer(), 
                                                               scenarios.ituM2135.IndoorHotspotAntennaCreator(), 
                                                               utCreator, 
-                                                              scenarios.ituM2135.IndoorHotspotUEPlacer(numberOfNodes, minDistance=10))
+                                                              scenarios.ituM2135.IndoorHotspotUEPlacer(numberOfNodes, minDistance=3))
 
 
 class CreatorPlacerBuilderUrbanMicro(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 10):
+    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 30):
       super(CreatorPlacerBuilderUrbanMicro, self).__init__(bsCreator,  
                                                            scenarios.ituM2135. UrbanMicroBSPlacer(numberOfCircles),
                                                            scenarios.ituM2135.UrbanMicroAntennaCreator(sectorization), 
@@ -128,28 +128,28 @@ class CreatorPlacerBuilderUrbanMicro(CreatorPlacerBuilder):
 
 class CreatorPlacerBuilderUrbanMacro(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, utCreator, sectorization,  numberOfCircles = 2, numberOfNodes = 10):
+    def __init__(self, bsCreator, utCreator, sectorization,  numberOfCircles = 2, numberOfNodes = 30):
       super(CreatorPlacerBuilderUrbanMacro, self).__init__(bsCreator,  
                                                            scenarios.ituM2135.UrbanMacroBSPlacer(numberOfCircles), 
                                                            scenarios.ituM2135.UrbanMacroAntennaCreator(sectorization), 
                                                            utCreator, 
-                                                           scenarios.ituM2135.UrbanMacroUEPlacer(numberOfNodes, minDistance=10))
+                                                           scenarios.ituM2135.UrbanMacroUEPlacer(numberOfNodes, minDistance=25))
 
 class CreatorPlacerBuilderRuralMacro(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 10):
+    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 30):
       super(CreatorPlacerBuilderRuralMacro, self).__init__(bsCreator,  
                                                            scenarios.ituM2135.RuralMacroBSPlacer(numberOfCircles),
                                                            scenarios.ituM2135.RuralMacroAntennaCreator(sectorization), 
                                                            utCreator, 
-                                                           scenarios.ituM2135.RuralMacroUEPlacer(numberOfNodes, minDistance=10))
+                                                           scenarios.ituM2135.RuralMacroUEPlacer(numberOfNodes, minDistance=35))
 
 class CreatorPlacerBuilderSuburbanMacro(CreatorPlacerBuilder):
 
-    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 10):
+    def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 30):
       super(CreatorPlacerBuilderSuburbanMacro, self).__init__(bsCreator,  
                                                               scenarios.ituM2135.SuburbanMacroBSPlacer(numberOfCircles), 
                                                               scenarios.ituM2135.SuburbanMacroAntennaCreator(sectorization), 
                                                               utCreator, 
-                                                              scenarios.ituM2135.SuburbanMacroUEPlacer(numberOfNodes, minDistance=10))
+                                                              scenarios.ituM2135.SuburbanMacroUEPlacer(numberOfNodes, minDistance=35))
 
