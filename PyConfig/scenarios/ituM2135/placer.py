@@ -29,34 +29,16 @@ import scenarios.interfaces
 import scenarios.placer
 import openwns.geometry.position
 
-class IndoorHotspotBSPlacer(scenarios.interfaces.INodePlacer):
+class IndoorHotspotBSPlacer(scenarios.placer.LinearPlacer):
 
     def __init__(self):
+        super(IndoorHotspotBSPlacer, self).__init__(numberOfNodes = 2, positionsList = [-30.0, 30.0], rotate = 0.0)
         self.center = openwns.geometry.position.Position(1000.0, 1000.0, 0.0)
 
-    def setCenter(self, position):
-        self.center = position
-
-    def getPositions(self):
-        leftStation = openwns.geometry.position.Position(-30.0, 0.0, 0.0)
-        rightStation = openwns.geometry.position.Position(30.0, 0.0, 0.0)
-        return [self.center + leftStation, self.center + rightStation]
-
-class IndoorHotspotUEPlacer(scenarios.interfaces.INodePlacer):
+class IndoorHotspotUEPlacer(scenarios.placer.RectangularAreaPlacer):
 
     def __init__(self, numberOfNodes, minDistance):
-        self.minDistance = minDistance
-        self.placer = scenarios.placer.RectangularAreaPlacer(numberOfNodes, w=60.0, h=50.0, minDistance=self.minDistance)
-
-    def setCenter(self, position):
-        self.placer.setCenter(position)
-
-    def getPositions(self):
-        return self.placer.getPositions()
-
-    def isInside(self, position):
-        return self.placer.isInside(position)
-
+        super(IndoorHotspotUEPlacer, self).__init__(numberOfNodes, w = 60.0, h = 50.0, minDistance = minDistance)
 
 class UrbanMicroBSPlacer(scenarios.placer.HexagonalPlacer):
 
