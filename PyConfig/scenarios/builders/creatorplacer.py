@@ -80,13 +80,20 @@ class CreatorPlacerBuilder(object):
 
             self.bsPositions = self.bsPlacer.getPositions()
 
+### Set isCenter to True for first BS
+            isCenter = True
             for currentPosition in self.bsPositions:
                 bsNode = self.bsCreator.create()
                 assert isinstance(bsNode, scenarios.interfaces.INode)
+                bsNode.setProperty("isCenter", isCenter)
                 bsNode.setPosition(currentPosition)
                 bsNode.setAntenna(antenna)
                 openwns.simulator.getSimulator().simulationModel.nodes.append(bsNode)
                 self.bsNodes.append(bsNode)
+
+### Set isCenter to False for the following BSs
+                if isCenter == True:
+                    isCenter = False
 
     def _createUserTerminals(self):
         self.utPositions = []
@@ -96,13 +103,15 @@ class CreatorPlacerBuilder(object):
             self.utPlacer.setCenter(offset)
             self.utPositions += self.utPlacer.getPositions()
 
+        self.bsPlacer.setCenter(self.bsPositions[0])
+        print "Center BS Posision is x: ", self.bsPositions[0].x," y: ", self.bsPositions[0].y
         for currentPosition in self.utPositions:
             utNode = self.utCreator.create()
             assert isinstance(utNode, scenarios.interfaces.INode)
             utNode.setPosition(currentPosition)
+            utNode.setProperty("isCenter", self.bsPlacer.isInside(currentPosition))
             openwns.simulator.getSimulator().simulationModel.nodes.append(utNode)
             self.utNodes.append(utNode)
-
 
 class CreatorPlacerBuilderIndoorHotspot(CreatorPlacerBuilder):
 

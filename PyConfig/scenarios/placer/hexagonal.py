@@ -83,6 +83,9 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
 
         return [pos + self.center for pos in posList]
 
+    def isInside(self, position):
+
+        return isInHexagon(position, math.sqrt(3)/self.interSiteDistance, self.center, self.rotate)
 
 
 def isInHexagon(position, radius, center, corrAngle = 0.0):
@@ -129,7 +132,7 @@ def createAreaScanMobility(steps, radius, minDistance, center, corrAngle):
                 
 class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
 
-    def __init__(self, numberOfNodes, interSiteDistance, minDistance, rotate = 0.0):
+    def __init__(self, numberOfNodes, interSiteDistance, minDistance = 0.0, rotate = 0.0):
         """ 
         @type  numberOfCircles: int
         @param numberOfCircles: The number of circles around the center cell
@@ -179,3 +182,6 @@ class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
 
         return [pos + self.center for pos in positions]
 
+    def isInside(self, position):
+
+        return isInHexagon(position, math.sqrt(3)/self.interSiteDistance, self.center, self.rotate)

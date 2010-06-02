@@ -50,6 +50,10 @@ class RectangularPlacer(scenarios.interfaces.INodePlacer):
         positions = [p + self.center for p in positions]
         return positions
 
+    def isInside(self, position):
+
+        return isInRectangle(position, self.w, self.h, self.center)
+
 def isInRectangle(position, w, h, center):
     p = position - center
     p.x += float(w)/2.0
@@ -82,7 +86,7 @@ def createAreaScanMobility(stepsX, stepsY, w, h, center):
 
 class RectangularAreaPlacer(scenarios.interfaces.INodePlacer):
 
-    def __init__(self, numberOfNodes, w, h, minDistance, rotate = 0.0):
+    def __init__(self, numberOfNodes, w, h, minDistance = 0.0, rotate = 0.0):
         self.numberOfNodes = numberOfNodes
         self.w = w
         self.h = h
@@ -98,7 +102,7 @@ class RectangularAreaPlacer(scenarios.interfaces.INodePlacer):
         while stationcounter < self.numberOfNodes:
             x = random.random() * self.w - self.w/2
             y = random.random() * self.h - self.h/2
-            if x*x + y*y > self.minDistance*self.minDistance:
+            if x*x + y*y > self.minDistance * self.minDistance:
                  
                 v = openwns.geometry.position.Vector(x=x , y=y , z = 0.0)
 
@@ -108,3 +112,7 @@ class RectangularAreaPlacer(scenarios.interfaces.INodePlacer):
                 stationcounter = stationcounter + 1
 
         return [pos + self.center for pos in positions]
+
+    def isInside(self, position):
+
+        return isInRectangle(position, self.w, self.h, self.center)

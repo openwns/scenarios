@@ -67,9 +67,14 @@ class CircularPlacer(scenarios.interfaces.INodePlacer):
         return [p + self.center for p in positions]
 
 
+    def isInside(self, position):
+        vector = (position - self.center)
+        return vector.length() <= self.radius
+
+
 def isInCircle(position, radius, center):
     vector = (position - center)
-    return vector.length() < radius
+    return vector.length() <= radius
 
 
 
@@ -79,7 +84,7 @@ class CircularAreaPlacer(scenarios.interfaces.INodePlacer):
     The placement will then be rotated by the rotate argument
     """
 
-    def __init__(self, numberOfNodes, radius, minDistance, rotate = 0.0):
+    def __init__(self, numberOfNodes, radius, minDistance = 0.0, rotate = 0.0):
         """
         @type  numberOfNodes: int
         @param numberOfNodes: The number of nodes on the circle
@@ -119,6 +124,10 @@ class CircularAreaPlacer(scenarios.interfaces.INodePlacer):
 
 
         return [pos + self.center for pos in positions]
+
+    def isInside(self, position):
+        vector = (position - self.center)
+        return vector.length() <= self.radius
 
 
 
