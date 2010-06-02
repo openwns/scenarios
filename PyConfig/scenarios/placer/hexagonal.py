@@ -85,7 +85,7 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
 
     def isInside(self, position):
 
-        return isInHexagon(position, math.sqrt(3)/self.interSiteDistance, self.center, self.rotate)
+        return isInHexagon(position, float(self.interSiteDistance) / math.sqrt(3), self.center, self.rotate)
 
 
 def isInHexagon(position, radius, center, corrAngle = 0.0):
@@ -184,4 +184,4 @@ class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
 
     def isInside(self, position):
 
-        return isInHexagon(position, math.sqrt(3)/self.interSiteDistance, self.center, self.rotate)
+        return isInHexagon(position, float(self.interSiteDistance) / math.sqrt(3), self.center, self.rotate)
