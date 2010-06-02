@@ -68,9 +68,8 @@ class CircularPlacer(scenarios.interfaces.INodePlacer):
 
 
     def isInside(self, position):
-        vector = (position - self.center)
-        return vector.length() <= self.radius
 
+        return isInCircle(position, self.radius, self.center)
 
 def isInCircle(position, radius, center):
     vector = (position - center)
@@ -121,13 +120,10 @@ class CircularAreaPlacer(scenarios.interfaces.INodePlacer):
             else:
                 pass
 
-
-
         return [pos + self.center for pos in positions]
 
     def isInside(self, position):
-        vector = (position - self.center)
-        return vector.length() <= self.radius
 
+        return isInCircle(position, self.radius, self.center)
 
 

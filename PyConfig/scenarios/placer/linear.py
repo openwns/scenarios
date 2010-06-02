@@ -64,3 +64,13 @@ class LinearPlacer(scenarios.interfaces.INodePlacer):
             positions.append(p)
 
         return [p + self.center for p in positions]
+
+    def isInside(self, position):
+        for i in xrange(self.numberOfNodes):
+            x = self.positionsList[i]
+            y = 0.0
+            v = openwns.geometry.position.Vector(x = x, y = y, z = 0.0)
+            p = v.turn2D(self.rotate).toPosition()
+            if p.x + self.center.x == position.x:
+                return True
+        return False

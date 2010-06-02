@@ -80,7 +80,7 @@ class CreatorPlacerBuilder(object):
 
             self.bsPositions = self.bsPlacer.getPositions()
 
-### Set isCenter to True for first BS
+            ### Set isCenter to True for first BS sectors
             isCenter = True
             for currentPosition in self.bsPositions:
                 bsNode = self.bsCreator.create()
@@ -91,7 +91,7 @@ class CreatorPlacerBuilder(object):
                 openwns.simulator.getSimulator().simulationModel.nodes.append(bsNode)
                 self.bsNodes.append(bsNode)
 
-### Set isCenter to False for the following BSs
+                ### Set isCenter to False for the following BS sectors
                 if isCenter == True:
                     isCenter = False
 
@@ -103,15 +103,17 @@ class CreatorPlacerBuilder(object):
             self.utPlacer.setCenter(offset)
             self.utPositions += self.utPlacer.getPositions()
 
-        self.bsPlacer.setCenter(self.bsPositions[0])
+        self.utPlacer.setCenter(self.bsPositions[0])
         print "Center BS Posision is x: ", self.bsPositions[0].x," y: ", self.bsPositions[0].y
         for currentPosition in self.utPositions:
             utNode = self.utCreator.create()
             assert isinstance(utNode, scenarios.interfaces.INode)
             utNode.setPosition(currentPosition)
-            utNode.setProperty("isCenter", self.bsPlacer.isInside(currentPosition))
+            utNode.setProperty("isCenter", self.utPlacer.isInside(currentPosition))
             openwns.simulator.getSimulator().simulationModel.nodes.append(utNode)
             self.utNodes.append(utNode)
+
+
 
 class CreatorPlacerBuilderIndoorHotspot(CreatorPlacerBuilder):
 

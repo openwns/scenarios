@@ -98,7 +98,7 @@ def isInHexagon(position, radius, center, corrAngle = 0.0):
     cos30deg = 0.86602540378443865         # =cos(30deg)=sin(60deg)
     if length>1.0:
         return False
-    if length<cos30deg:
+    if length<=cos30deg:
         return True
     angle  = vector.angle2D()-corrAngle    # 0=right; pi/2=up; pi=left; -pi/2=down
     angleReduced = angle % (math.pi/3.0)   # in [0..60deg]

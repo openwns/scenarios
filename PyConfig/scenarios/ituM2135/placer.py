@@ -54,6 +54,8 @@ class IndoorHotspotUEPlacer(scenarios.interfaces.INodePlacer):
     def getPositions(self):
         return self.placer.getPositions()
 
+    def isInside(self, position):
+        return self.placer.isInside(position)
 
 
 class UrbanMicroBSPlacer(scenarios.placer.HexagonalPlacer):
