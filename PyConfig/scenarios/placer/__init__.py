@@ -2,6 +2,7 @@ import scenarios.interfaces
 from hexagonal import HexagonalPlacer
 from circular import CircularPlacer
 from linear import LinearPlacer
+from positionList import PositionListPlacer
 from hexagonal import HexagonalAreaPlacer
 from circular import CircularAreaPlacer
 from rectangular import RectangularPlacer
