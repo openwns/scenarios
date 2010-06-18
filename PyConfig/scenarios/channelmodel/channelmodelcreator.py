@@ -25,6 +25,18 @@
 #
 ###############################################################################
 
-from antenna import *
-from placer import *
-from channelmodelcreator import *
+import scenarios.interfaces
+import rise.scenario.Propagation
+from rise.scenario import Shadowing
+from rise.scenario import FastFading
+
+class ChannelModelCreator(scenarios.interfaces.IChannelModelCreator):
+    
+    def __init__(self, pathloss = None, shadowing = Shadowing.No(), fastFading = FastFading.No()):
+        self.pathloss = pathloss
+        self.shadowing = shadowing
+        self.fastFading = fastFading
+        
+    def create(self):
+        channelmodel = rise.scenario.Propagation.Configuration(self.pathloss, self.shadowing, self.fastFading)
+        return channelmodel

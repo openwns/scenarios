@@ -29,6 +29,7 @@ pyconfigs = [
     'scenarios/ituM2135/__init__.py',
     'scenarios/ituM2135/antenna.py',
     'scenarios/ituM2135/placer.py',
+    'scenarios/ituM2135/channelmodelcreator.py',
     'scenarios/toolsupport/__init__.py',
     'scenarios/toolsupport/pytreevisitors/__init__.py',
     'scenarios/toolsupport/pytreevisitors/builders/__init__.py',
@@ -37,6 +38,8 @@ pyconfigs = [
     'scenarios/binding/binding.py',
     'scenarios/scenariosets/__init__.py',
     'scenarios/scenariosets/scenariosets.py',
+    'scenarios/channelmodel/__init__.py',
+    'scenarios/channelmodel/channelmodelcreator.py',
 ]
 
 dependencies = []

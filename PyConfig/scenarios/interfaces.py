@@ -133,3 +133,19 @@ class IAntennaCreator(openwns.interface.Interface):
         @return: The new antenna that was created
         """
         pass
+
+class IChannelModelCreator(openwns.interface.Interface):
+    """
+    Defines the interface for Channel Model creation strategies
+    """
+
+    @openwns.interface.abstractmethod
+    def create(self):
+        """"
+        Implement the strategy to build your Channel Model here
+
+        @rtype: rise.scenario.Propagation.Configuration
+        @return: The new Channel Model that was created
+        """
+        pass
+
