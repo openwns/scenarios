@@ -30,6 +30,7 @@ import scenarios.ituM2135
 import scenarios.channelmodel
 import openwns.simulator
 import openwns.node
+from ofdmaphy.OFDMAPhy import OFDMASystem
 
 
 class CreatorPlacerBuilder(object):
@@ -57,11 +58,15 @@ class CreatorPlacerBuilder(object):
         assert isinstance(utCreator, scenarios.interfaces.INodeCreator)
         assert isinstance(utPlacer, scenarios.interfaces.INodePlacer)
 
+
         if openwns.simulator.getSimulator() is None:
             print "Creating new Simulator"
             newSimulator = openwns.simulator.OpenWNS()
             newSimulator.simulationModel = openwns.node.NodeSimulationModel()
             openwns.simulator.setSimulator(newSimulator)
+
+        ofdmaPhySystem = OFDMASystem('ofdma')
+        openwns.simulator.getSimulator().modules.ofdmaPhy.systems.append(ofdmaPhySystem)
 
         self.bsCreator = bsCreator
         self.bsPlacer = bsPlacer
@@ -125,7 +130,8 @@ class CreatorPlacerBuilderIndoorHotspot(CreatorPlacerBuilder):
     def __init__(self, bsCreator,  utCreator, numberOfNodes = 10):
       super(CreatorPlacerBuilderIndoorHotspot, self).__init__(bsCreator,  
                                                               scenarios.ituM2135.IndoorHotspotBSPlacer(), 
-                                                              scenarios.ituM2135.IndoorHotspotAntennaCreator(),                                   utCreator, 
+                                                              scenarios.ituM2135.IndoorHotspotAntennaCreator(),
+                                                              utCreator,
                                                               scenarios.ituM2135.IndoorHotspotUEPlacer(numberOfNodes, minDistance=3), 
                                                               scenarios.ituM2135.IndoorHotspotChannelModelCreator())
 
@@ -135,7 +141,8 @@ class CreatorPlacerBuilderUrbanMicro(CreatorPlacerBuilder):
     def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 30):
       super(CreatorPlacerBuilderUrbanMicro, self).__init__(bsCreator,  
                                                            scenarios.ituM2135. UrbanMicroBSPlacer(numberOfCircles),
-                                                           scenarios.ituM2135.UrbanMicroAntennaCreator(sectorization),                                 utCreator, 
+                                                           scenarios.ituM2135.UrbanMicroAntennaCreator(sectorization),
+                                                           utCreator, 
                                                            scenarios.ituM2135.UrbanMicroUEPlacer(numberOfNodes, minDistance=10),
                                                            scenarios.ituM2135.UrbanMicroChannelModelCreator())
 
@@ -157,7 +164,8 @@ class CreatorPlacerBuilderRuralMacro(CreatorPlacerBuilder):
     def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 30):
       super(CreatorPlacerBuilderRuralMacro, self).__init__(bsCreator,  
                                                            scenarios.ituM2135.RuralMacroBSPlacer(numberOfCircles),
-                                                           scenarios.ituM2135.RuralMacroAntennaCreator(sectorization),                                 utCreator,
+                                                           scenarios.ituM2135.RuralMacroAntennaCreator(sectorization),
+                                                           utCreator,
                                                            scenarios.ituM2135.RuralMacroUEPlacer(numberOfNodes, minDistance=35),
                                                            scenarios.ituM2135.RuralMacroChannelModelCreator())
 
@@ -166,7 +174,8 @@ class CreatorPlacerBuilderSuburbanMacro(CreatorPlacerBuilder):
     def __init__(self, bsCreator, utCreator,  sectorization, numberOfCircles = 2, numberOfNodes = 30):
       super(CreatorPlacerBuilderSuburbanMacro, self).__init__(bsCreator,  
                                                               scenarios.ituM2135.SuburbanMacroBSPlacer(numberOfCircles),
-                                                              scenarios.ituM2135.SuburbanMacroAntennaCreator(sectorization),                           utCreator,
+                                                              scenarios.ituM2135.SuburbanMacroAntennaCreator(sectorization),
+                                                              utCreator,
                                                               scenarios.ituM2135.SuburbanMacroUEPlacer(numberOfNodes, minDistance=35),
                                                               scenarios.ituM2135.SuburbanMacroChannelModelCreator())
 
