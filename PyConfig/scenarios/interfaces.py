@@ -63,6 +63,16 @@ class INode(openwns.interface.Interface):
         pass
 
     @openwns.interface.abstractmethod
+    def setChannelModel(self, channelModel):
+        """
+        Set the channel model for this node
+
+        @type channelModel: ChannelModel
+        @param antenna: The ChannelModel that should be installed in this node
+        """
+        pass
+
+    @openwns.interface.abstractmethod
     def getProperty(self, propertyName):
         """
         Return the property value of this node.
