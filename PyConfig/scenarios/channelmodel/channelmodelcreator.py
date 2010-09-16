@@ -34,12 +34,6 @@ defaultPairs = [("AP","AP"),("AP","FRS"),("AP","UT"),
                    ("UT","UT"),("UT","FRS"),("UT","AP"),
                    ("FRS","FRS"),("FRS","AP"),("FRS","UT"),("DropIn","DropIn")]
 
-class ChannelModelConfiguration():
-    
-    def __init__(self, transceiverPair, channelmodel):
-        self.transceiverPair = transceiverPair
-        self.channelmodel = channelmodel
-
 class SingleChannelModelCreator(scenarios.interfaces.IChannelModelCreator):
     
     def __init__(self, transceiverPairs, pathloss = None, shadowing = Shadowing.No(), fastFading = FastFading.No()):
@@ -52,7 +46,7 @@ class SingleChannelModelCreator(scenarios.interfaces.IChannelModelCreator):
         channelmodelConfigurations = []
         for pair in self.transceiverPairs:
             channelmodel = rise.scenario.Propagation.Configuration(self.pathloss, self.shadowing, self.fastFading)
-            channelmodelConfiguration = ChannelModelConfiguration(pair, channelmodel)
+            channelmodelConfiguration = rise.scenario.Propagation.ChannelModelConfiguration(pair, channelmodel)
             channelmodelConfigurations.append(channelmodelConfiguration)
         return channelmodelConfigurations
 
