@@ -38,8 +38,8 @@ class IndoorHotspotBSPlacer(scenarios.placer.LinearPlacer):
 class IndoorHotspotUEPlacer(scenarios.placer.RectangularAreaPlacer):
 
     def __init__(self, numberOfNodes, minDistance):
-        super(IndoorHotspotUEPlacer, self).__init__(numberOfNodes, w = 60.0, h = 50.0, minDistance = minDistance)
-
+        super(IndoorHotspotUEPlacer, self).__init__(numberOfNodes, w = 120.0, h = 50.0, minDistance = minDistance, perBS = False)
+        
 class UrbanMicroBSPlacer(scenarios.placer.HexagonalPlacer):
 
     def __init__(self, numberOfCircles):

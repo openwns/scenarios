@@ -114,6 +114,10 @@ class INodePlacer(openwns.interface.Interface):
         """
         pass
 
+    # Default for UE placers assuring same number of UEs per BS.
+    # Ignored for BS placers
+    perBS = True
+
 class INodeCreator(openwns.interface.Interface):
     """
     Defines the interface for Node creation strategies

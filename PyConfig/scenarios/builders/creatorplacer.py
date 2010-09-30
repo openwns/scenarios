@@ -106,11 +106,16 @@ class CreatorPlacerBuilder(object):
     def _createUserTerminals(self):
         channelmodelConfigurations = self.channelmodelCreator.create()
         self.utPositions = []
-        for bsPosition in self.bsPositions:
-            # We only translate by the x,y coordinates. The height is not altered
-            offset = openwns.geometry.position.Position(bsPosition.x, bsPosition.y, 0.0)
-            self.utPlacer.setCenter(offset)
-            self.utPositions += self.utPlacer.getPositions()
+        if self.utPlacer.perBS == True:
+            for bsPosition in self.bsPositions:
+                # We only translate by the x,y coordinates. The height is not altered
+                offset = openwns.geometry.position.Position(bsPosition.x, bsPosition.y, 0.0)
+                self.utPlacer.setCenter(offset)
+                self.utPositions += self.utPlacer.getPositions()
+                
+        else:
+            self.utPlacer.setCenter(self.bsPlacer.center)
+            self.utPositions = self.utPlacer.getPositions()
 
         self.utPlacer.setCenter(self.bsPositions[0])
         print "Center BS Posision is x: ", self.bsPositions[0].x," y: ", self.bsPositions[0].y
