@@ -33,7 +33,7 @@ class IndoorHotspotBSPlacer(scenarios.placer.LinearPlacer):
 
     def __init__(self):
         super(IndoorHotspotBSPlacer, self).__init__(numberOfNodes = 2, positionsList = [-30.0, 30.0], rotate = 0.0)
-        self.center = openwns.geometry.position.Position(1000.0, 1000.0, 0.0)
+        self.setCenter(openwns.geometry.position.Position(1000.0, 1000.0, 0.0))
 
 class IndoorHotspotUEPlacer(scenarios.placer.RectangularAreaPlacer):
 
@@ -44,24 +44,25 @@ class UrbanMicroBSPlacer(scenarios.placer.HexagonalPlacer):
 
     def __init__(self, numberOfCircles):
         super(UrbanMicroBSPlacer,self).__init__(numberOfCircles, interSiteDistance = 200.0)
+        self.setCenter(openwns.geometry.position.Position(1000.0, 1000.0, 0.0))
 
+class UrbanMicroUEPlacer(scenarios.placer.UniformDistributedPlacerInHexagonalGrid):
 
-class UrbanMicroUEPlacer(scenarios.placer.HexagonalAreaPlacer):
-
-    def __init__(self, numberOfNodes, minDistance):
-        super(UrbanMicroUEPlacer,self).__init__(numberOfNodes, interSiteDistance = 200.0, minDistance=minDistance)
-
+    def __init__(self, numberOfNodes, numberOfCircles, minDistance):
+        super(UrbanMicroUEPlacer,self).__init__(numberOfNodes, numberOfCircles, 
+                                                interSiteDistance = 200.0, minDistance=minDistance)
 
 class UrbanMacroBSPlacer(scenarios.placer.HexagonalPlacer):
 
     def __init__(self, numberOfCircles):
         super(UrbanMacroBSPlacer,self).__init__(numberOfCircles, interSiteDistance = 500.0)
+        self.setCenter(openwns.geometry.position.Position(1000.0, 1000.0, 0.0))
 
+class UrbanMacroUEPlacer(scenarios.placer.UniformDistributedPlacerInHexagonalGrid):
 
-class UrbanMacroUEPlacer(scenarios.placer.HexagonalAreaPlacer):
-
-    def __init__(self, numberOfNodes, minDistance):
-        super(UrbanMacroUEPlacer,self).__init__(numberOfNodes, interSiteDistance = 500.0, minDistance=minDistance)
+    def __init__(self, numberOfNodes, numberOfCircles, minDistance):
+        super(UrbanMacroUEPlacer,self).__init__(numberOfNodes, numberOfCircles, 
+                                                interSiteDistance = 500.0, minDistance=minDistance)
 
 
 class RuralMacroBSPlacer(scenarios.placer.HexagonalPlacer):
@@ -71,11 +72,11 @@ class RuralMacroBSPlacer(scenarios.placer.HexagonalPlacer):
         self.setCenter(openwns.geometry.position.Position(5000.0, 5000.0, 0.0))
 
 
-class RuralMacroUEPlacer(scenarios.placer.HexagonalAreaPlacer):
+class RuralMacroUEPlacer(scenarios.placer.UniformDistributedPlacerInHexagonalGrid):
 
-    def __init__(self, numberOfNodes, minDistance):
-        super(RuralMacroUEPlacer,self).__init__(numberOfNodes, interSiteDistance = 1732.0, minDistance=minDistance)
-        self.setCenter(openwns.geometry.position.Position(5000.0, 5000.0, 0.0))
+    def __init__(self, numberOfNodes, numberOfCircles, minDistance):
+        super(RuralMacroUEPlacer,self).__init__(numberOfNodes, numberOfCircles, 
+                                                interSiteDistance = 1732.0, minDistance=minDistance)
 
 
 class SuburbanMacroBSPlacer(scenarios.placer.HexagonalPlacer):
@@ -85,8 +86,8 @@ class SuburbanMacroBSPlacer(scenarios.placer.HexagonalPlacer):
         self.setCenter(openwns.geometry.position.Position(5000.0, 5000.0, 0.0))
 
 
-class SuburbanMacroUEPlacer(scenarios.placer.HexagonalAreaPlacer):
+class SuburbanMacroUEPlacer(scenarios.placer.UniformDistributedPlacerInHexagonalGrid):
 
-    def __init__(self, numberOfNodes, minDistance):
-        super(SuburbanMacroUEPlacer,self).__init__(numberOfNodes, interSiteDistance = 1299.0, minDistance=minDistance)
-        self.setCenter(openwns.geometry.position.Position(5000.0, 5000.0, 0.0))
+    def __init__(self, numberOfNodes, numberOfCircles, minDistance):
+        super(SuburbanMacroUEPlacer,self).__init__(numberOfNodes, numberOfCircles, 
+                                                   interSiteDistance = 1299.0, minDistance=minDistance)

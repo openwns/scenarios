@@ -1,5 +1,6 @@
 import scenarios.interfaces
 from hexagonal import HexagonalPlacer
+from hexagonal import UniformDistributedPlacerInHexagonalGrid
 from circular import CircularPlacer
 from linear import LinearPlacer
 from positionList import PositionListPlacer

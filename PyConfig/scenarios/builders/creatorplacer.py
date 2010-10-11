@@ -148,7 +148,9 @@ class CreatorPlacerBuilderUrbanMicro(CreatorPlacerBuilder):
                                                            scenarios.ituM2135. UrbanMicroBSPlacer(numberOfCircles),
                                                            scenarios.ituM2135.UrbanMicroAntennaCreator(sectorization),
                                                            utCreator, 
-                                                           scenarios.ituM2135.UrbanMicroUEPlacer(numberOfNodes, minDistance=10),
+                                                           scenarios.ituM2135.UrbanMicroUEPlacer(numberOfNodes,
+                                                                                                 numberOfCircles,
+                                                                                                 minDistance=10),
                                                            scenarios.ituM2135.UrbanMicroChannelModelCreator())
 
 
@@ -161,7 +163,9 @@ class CreatorPlacerBuilderUrbanMacro(CreatorPlacerBuilder):
                                                            scenarios.ituM2135.UrbanMacroBSPlacer(numberOfCircles), 
                                                            scenarios.ituM2135.UrbanMacroAntennaCreator(sectorization),
                                                            utCreator,
-                                                           scenarios.ituM2135.UrbanMacroUEPlacer(numberOfNodes, minDistance=25),
+                                                           scenarios.ituM2135.UrbanMacroUEPlacer(numberOfNodes,
+                                                                                                 numberOfCircles,
+                                                                                                 minDistance=25),
                                                            scenarios.ituM2135.UrbanMacroChannelModelCreator())
 
 class CreatorPlacerBuilderRuralMacro(CreatorPlacerBuilder):
@@ -171,7 +175,9 @@ class CreatorPlacerBuilderRuralMacro(CreatorPlacerBuilder):
                                                            scenarios.ituM2135.RuralMacroBSPlacer(numberOfCircles),
                                                            scenarios.ituM2135.RuralMacroAntennaCreator(sectorization),
                                                            utCreator,
-                                                           scenarios.ituM2135.RuralMacroUEPlacer(numberOfNodes, minDistance=35),
+                                                           scenarios.ituM2135.RuralMacroUEPlacer(numberOfNodes,
+                                                                                                 numberOfCircles,
+                                                                                                 minDistance=35),
                                                            scenarios.ituM2135.RuralMacroChannelModelCreator())
 
 class CreatorPlacerBuilderSuburbanMacro(CreatorPlacerBuilder):
@@ -181,6 +187,8 @@ class CreatorPlacerBuilderSuburbanMacro(CreatorPlacerBuilder):
                                                               scenarios.ituM2135.SuburbanMacroBSPlacer(numberOfCircles),
                                                               scenarios.ituM2135.SuburbanMacroAntennaCreator(sectorization),
                                                               utCreator,
-                                                              scenarios.ituM2135.SuburbanMacroUEPlacer(numberOfNodes, minDistance=35),
+                                                              scenarios.ituM2135.SuburbanMacroUEPlacer(numberOfNodes,
+                                                                                                       numberOfCircles,
+                                                                                                       minDistance=35),
                                                               scenarios.ituM2135.SuburbanMacroChannelModelCreator())
 

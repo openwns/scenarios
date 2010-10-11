@@ -25,6 +25,7 @@
 #
 ###############################################################################
 
+import rise.scenario.Hexagonal
 import scenarios.interfaces
 import openwns.geometry.position
 import math,random
@@ -82,6 +83,13 @@ class HexagonalPlacer(scenarios.interfaces.INodePlacer):
                 dj=odi+odj
 
         return [pos + self.center for pos in posList]
+
+    def getCenterCellPosition(self):
+
+        """
+        Return BS position of center cell
+        """
+        return self.center
 
     def isInside(self, position):
 
@@ -185,3 +193,141 @@ class HexagonalAreaPlacer(scenarios.interfaces.INodePlacer):
     def isInside(self, position):
 
         return isInHexagon(position, float(self.interSiteDistance) / math.sqrt(3), self.center, self.rotate)
+
+
+class UniformDistributedPlacerInHexagonalGrid(scenarios.interfaces.INodePlacer):
+
+    """
+    Place a number of nodes uniformly distributed on a given area.
+    """
+    def __init__(self, numberOfNodes, numberOfCircles, interSiteDistance, minDistance = 0.0, rotate=0.0):
+
+        """
+        @type  numberOfNodes: int
+        @param numberOfNodes: The number of nodes in the scenario
+        @type  numberOfCircles: int
+        @param numberOfCircles: The number of circles surrounding the center cell
+        @type  interSiteDistance: float
+        @param interSiteDistance: The cells' interSiteDistance [m]
+        @type  rotate: float
+        @param rotate: Rotation of the hexagonal BS positioning layout
+
+        """
+        assert numberOfCircles >= 0
+        assert interSiteDistance > 0
+        assert 0 <= rotate <= 2.0*math.pi # rotates the final result by corrAngle
+
+        self.numberOfNodes = numberOfNodes
+        self.numberOfCircles = numberOfCircles
+        self.interSiteDistance = interSiteDistance
+        self.rotate = rotate
+        self.center = openwns.geometry.position.Position(x = 1000.0, y = 1000.0, z = 0.0)
+        self.minDistance = minDistance
+        self.positions = []
+        self.perBS = False
+        self.bsPositions = []
+
+    def setCenter(self, center):
+        self.center = center
+    
+    def getPositions(self):
+
+        if self.positions == []:
+            return self._getPositions()
+        else: # positions already calculated
+            return self.positions
+
+    def _getPositions(self):
+        radius = self.interSiteDistance/math.sqrt(3)
+        lowerXBound = self.center.x-((self.numberOfCircles*self.interSiteDistance)+radius)
+        upperXBound = self.center.x+(self.numberOfCircles*self.interSiteDistance)+radius
+        lowerYBound = self.center.y-((self.numberOfCircles*self.interSiteDistance)+radius)
+        upperYBound = self.center.y+(self.numberOfCircles*self.interSiteDistance)+radius
+
+        positions = []
+        for node in xrange(self.numberOfNodes):
+            utPositionIsValid = False
+
+            while(not utPositionIsValid):
+                xPos = random.uniform(lowerXBound,upperXBound)
+                yPos = random.uniform(lowerYBound,upperYBound)
+                utPos = openwns.geometry.position.Position(xPos, yPos)
+                
+                # find serving cell (in terms of shortes distance UE <--> BS)
+                servingBSPosition = self._findServingBS(utPos)
+
+                # minimum distance UE to serving BS (in horizontal terms): 25m
+                if ((self.getPositionDistance(utPos, servingBSPosition) >= self.minDistance) and rise.scenario.Hexagonal.isInHexagon(utPos, radius, servingBSPosition, self.rotate)):
+
+                    positions.append(utPos)
+                    utPositionIsValid = True
+
+        return positions
+
+    def getPositionDistance(self, pos1, pos2):
+
+        return math.sqrt((pos1.x-pos2.x)**2+(pos1.y-pos2.y)**2)
+
+    def _findServingBS(self, _utPos):
+
+        """
+        Given the position of the UT find the BS of shortest distance
+        and return the base station's position
+        """
+
+
+        """
+        calculate list of BS positions
+        self.interSiteDistance is in Meters [m]
+        self.center is a Position(x,y,z) of center Base Station
+        self.rotate is in radiant [0..2pi]
+        self.rotate can be 0 (default) or e.g. math.pi/6.0 ( = 30 degrees)
+        """
+
+        self.bsPositions.append(self.center) # central BS position
+
+        numInnerCells = (self.numberOfCircles*(self.numberOfCircles+1)/2)*6+1
+        for circle in xrange(1,self.numberOfCircles+1): #  xrange(nCircles)=0..nCircles-1
+            i=circle; j=0 # start vector
+            di=-1; dj=1 # delta vector
+            for edge in xrange(6): # 0..5
+                for way in xrange(circle):
+                    v = openwns.geometry.position.Vector(math.sqrt(3)/2.0*j,float(i)+0.5*float(j))*self.interSiteDistance
+                    p = v.turn2D(self.rotate).toPosition() + self.center
+                    self.bsPositions.append(p)
+                    i=i+di; j=j+dj
+                # turn delta vector by 60 degrees right
+                odi=di; odj=dj
+                di=-odj
+                dj=odi+odj
+
+
+        bsPos = self.center
+        minDistance = self.numberOfCircles*self.interSiteDistance*10 # > than possible UT positions
+        for bs in self.bsPositions:
+            distance = self.getPositionDistance(_utPos, bs)
+
+            if distance < minDistance:
+                minDistance = distance
+                bsPos = bs
+        return bsPos
+
+
+    def getUEsInCenterCell(self, utPosList):
+        radius = self.interSiteDistance/math.sqrt(3)
+        centerCellUEs = []
+        for utPos in utPosList:
+            if (rise.scenario.Hexagonal.isInHexagon(utPos, radius, self.center, self.rotate)):
+                centerCellUEs.append(utPos)
+        return centerCellUEs
+
+
+    def setNumberOfNodes(self, _numOfNodes):
+        self.numberOfNodes = _numOfNodes
+
+
+    def isInside(self, position):
+
+        return isInHexagon(position, float(self.interSiteDistance) / math.sqrt(3), self.center, self.rotate)
+
+
