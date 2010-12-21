@@ -39,12 +39,12 @@ class CreatorPlacerBuilderVisitor(openwns.toolsupport.IPyTreeVisitor):
         pylab.ylim(min(ypos) - paddingy, max(ypos) + paddingy)
 
         for bspos in o.bsPositions:
-            c=Circle((bspos.x, bspos.y), 5.0)
+            c=Circle((bspos.x, bspos.y), 0.01 * xlen)
 
             pylab.gca().add_patch(c)
 
         for utpos in o.utPositions:
-            c=Circle((utpos.x, utpos.y), 5.0, facecolor="red")
+            c=Circle((utpos.x, utpos.y), 0.01 * xlen, facecolor="red")
 
             pylab.gca().add_patch(c)
 
