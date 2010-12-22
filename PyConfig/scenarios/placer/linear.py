@@ -46,7 +46,7 @@ class LinearPlacer(scenarios.interfaces.INodePlacer):
         @param rotate: Rotate the final result by rotate in radiant [0..2pi]
         """
 
-        self.center = openwns.geometry.position.Position(x = 0.0, y = 0.0, z = 0.0)
+        self.center = openwns.geometry.position.Position(x = 1000.0, y = 1000.0, z = 0.0)
         self.numberOfNodes = numberOfNodes
         self.positionsList = positionsList
         self.rotate = rotate
