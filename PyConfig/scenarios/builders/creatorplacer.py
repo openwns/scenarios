@@ -107,26 +107,30 @@ class CreatorPlacerBuilder(object):
         channelmodelConfigurations = self.channelmodelCreator.create()
         self.utPositions = []
         if self.utPlacer.perBS == True:
-            for bsPosition in self.bsPositions:
+            for bs in self.bsNodes:
                 # We only translate by the x,y coordinates. The height is not altered
-                offset = openwns.geometry.position.Position(bsPosition.x, bsPosition.y, 0.0)
+                offset = openwns.geometry.position.Position(bs.getPosition().x, bs.getPosition().y, 0.0)
                 self.utPlacer.setCenter(offset)
-                self.utPositions += self.utPlacer.getPositions()
-                
+                for currentPosition in self.utPlacer.getPositions():
+                    utNode = self.utCreator.create()
+                    assert isinstance(utNode, scenarios.interfaces.INode)
+                    utNode.setPosition(currentPosition)
+                    utNode.setProperty("BS", bs)
+                    self.utNodes.append(utNode)
         else:
             self.utPlacer.setCenter(self.bsPlacer.center)
-            self.utPositions = self.utPlacer.getPositions()
+            for currentPosition in self.utPlacer.getPositions():
+                utNode = self.utCreator.create()
+                assert isinstance(utNode, scenarios.interfaces.INode)
+                utNode.setPosition(currentPosition)
+                self.utNodes.append(utNode)
 
         self.utPlacer.setCenter(self.bsPositions[0])
-        print "Center BS Posision is x: ", self.bsPositions[0].x," y: ", self.bsPositions[0].y
-        for currentPosition in self.utPositions:
-            utNode = self.utCreator.create()
-            assert isinstance(utNode, scenarios.interfaces.INode)
-            utNode.setPosition(currentPosition)
+        print "Position of first (center) BS is x: ", self.bsPositions[0].x," y: ", self.bsPositions[0].y
+        for utNode in self.utNodes:
             utNode.setProperty("isCenter", self.utPlacer.isInside(currentPosition))
             utNode.setChannelModel(channelmodelConfigurations)
             openwns.simulator.getSimulator().simulationModel.nodes.append(utNode)
-            self.utNodes.append(utNode)
 
 
 
