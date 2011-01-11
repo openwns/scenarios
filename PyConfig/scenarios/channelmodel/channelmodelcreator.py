@@ -59,3 +59,38 @@ class PerPairChannelModelCreator(scenarios.interfaces.IChannelModelCreator):
     def create(self):
         return self.channelmodelConfigurations
 
+class SingleSlopeChannelModelCreator(SingleChannelModelCreator):
+    
+    def __init__(self, offset, distFactor, freqFactor = 0.0):
+        
+        import rise.Scenario
+        from rise.scenario import Shadowing
+        from rise.scenario import FastFading
+        import rise.scenario.Pathloss
+        from openwns.interval import Interval
+        transceiverPairs = scenarios.channelmodel.defaultPairs
+
+        pathloss = rise.scenario.Pathloss.SingleSlope(
+            validFrequencies = Interval(0, 1E12),
+            validDistances = Interval(0, 1E6),
+            offset = offset, 
+            freqFactor = freqFactor,
+            distFactor = distFactor, 
+            distanceUnit = "m", 
+            minPathloss = "0.0 dB",
+            outOfMinRange = rise.scenario.Pathloss.Deny(),
+            outOfMaxRange = rise.scenario.Pathloss.Deny()
+            )
+        scenarios.channelmodel.SingleChannelModelCreator.__init__(
+                self, transceiverPairs, pathloss, Shadowing.No(), FastFading.No())
+
+class TestChannelModelCreator(SingleSlopeChannelModelCreator):
+    
+    def __init__(self):
+	SingleSlopeChannelModelCreator.__init__(self, "41.9 dB", "23.8 dB")
+
+class InHNLoSChannelModelCreator(SingleSlopeChannelModelCreator):
+    
+    def __init__(self):
+	SingleSlopeChannelModelCreator.__init__(self, "22.13 dB", "43.3 dB")
+
