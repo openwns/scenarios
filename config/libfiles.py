@@ -30,6 +30,7 @@ pyconfigs = [
     'scenarios/ituM2135/antenna.py',
     'scenarios/ituM2135/placer.py',
     'scenarios/ituM2135/channelmodelcreator.py',
+    'scenarios/ituM2135/creatorplacer.py',
     'scenarios/toolsupport/__init__.py',
     'scenarios/toolsupport/pytreevisitors/__init__.py',
     'scenarios/toolsupport/pytreevisitors/builders/__init__.py',
