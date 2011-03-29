@@ -26,9 +26,6 @@
 ###############################################################################
 
 import scenarios.interfaces
-import rise.scenario.Propagation
-from rise.scenario import Shadowing
-from rise.scenario import FastFading
 
 defaultPairs = [("AP","AP"),("AP","FRS"),("AP","UT"),
                    ("UT","UT"),("UT","FRS"),("UT","AP"),
@@ -36,13 +33,14 @@ defaultPairs = [("AP","AP"),("AP","FRS"),("AP","UT"),
 
 class SingleChannelModelCreator(scenarios.interfaces.IChannelModelCreator):
     
-    def __init__(self, transceiverPairs, pathloss = None, shadowing = Shadowing.No(), fastFading = FastFading.No()):
+    def __init__(self, transceiverPairs, pathloss, shadowing, fastFading):
         self.transceiverPairs = transceiverPairs
         self.pathloss = pathloss
         self.shadowing = shadowing
         self.fastFading = fastFading
         
     def create(self):
+        import rise.scenario.Propagation
         channelmodelConfigurations = []
         for pair in self.transceiverPairs:
             channelmodel = rise.scenario.Propagation.Configuration(self.pathloss, self.shadowing, self.fastFading)
