@@ -25,7 +25,6 @@
 #
 ###############################################################################
 
-import rise.Antenna
 import scenarios.antenna.isotropic
 import scenarios.interfaces
 
@@ -53,6 +52,7 @@ class UrbanMicroAntennaCreator(scenarios.interfaces.IAntennaCreator):
         else:
             self.azimuth = [0.0]
     def create(self):
+        import rise.Antenna
         # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
         downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
         for azimuth in self.azimuth:
@@ -62,6 +62,7 @@ class UrbanMicroAntennaCreator(scenarios.interfaces.IAntennaCreator):
         return self.antennalist
 
     def getAntenna(self):
+        import rise.Antenna
         # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
         downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
         for azimuth in self.azimuth:
@@ -83,6 +84,7 @@ class UrbanMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
             self.azimuth = [0.0]
 
     def create(self):
+        import rise.Antenna
         # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
         downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
 
@@ -93,6 +95,7 @@ class UrbanMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
         return self.antennalist
 
     def getAntenna(self):
+        import rise.Antenna
         # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
         downtilt = (12.0 + 90.0)/360.0 * 2 * 3.14159265
 
@@ -116,6 +119,7 @@ class RuralMacroAntennaCreator(scenarios.interfaces.IAntennaCreator):
             self.azimuth = [0.0]
 
     def create(self):
+        import rise.Antenna
         # Downtilt 12 degrees (in rise up is 0 degree horizontal is 90 degree)
         downtilt = (6.0 + 90.0)/360.0 * 2 * 3.14159265
 
