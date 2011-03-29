@@ -25,7 +25,6 @@
 #
 ###############################################################################
 
-import rise.scenario.Hexagonal
 import scenarios.interfaces
 import openwns.geometry.position
 import math,random
@@ -257,7 +256,7 @@ class UniformDistributedPlacerInHexagonalGrid(scenarios.interfaces.INodePlacer):
                 servingBSPosition = self._findServingBS(utPos)
 
                 # minimum distance UE to serving BS (in horizontal terms): 25m
-                if ((self.getPositionDistance(utPos, servingBSPosition) >= self.minDistance) and rise.scenario.Hexagonal.isInHexagon(utPos, radius, servingBSPosition, self.rotate)):
+                if ((self.getPositionDistance(utPos, servingBSPosition) >= self.minDistance) and isInHexagon(utPos, radius, servingBSPosition, self.rotate)):
 
                     positions.append(utPos)
                     utPositionIsValid = True
@@ -317,7 +316,7 @@ class UniformDistributedPlacerInHexagonalGrid(scenarios.interfaces.INodePlacer):
         radius = self.interSiteDistance/math.sqrt(3)
         centerCellUEs = []
         for utPos in utPosList:
-            if (rise.scenario.Hexagonal.isInHexagon(utPos, radius, self.center, self.rotate)):
+            if (isInHexagon(utPos, radius, self.center, self.rotate)):
                 centerCellUEs.append(utPos)
         return centerCellUEs
 
