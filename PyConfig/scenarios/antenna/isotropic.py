@@ -25,7 +25,6 @@
 #
 ###############################################################################
 
-import rise.Antenna
 import scenarios.interfaces
 
 class IsotropicAntennaCreator(scenarios.interfaces.IAntennaCreator):
@@ -34,8 +33,10 @@ class IsotropicAntennaCreator(scenarios.interfaces.IAntennaCreator):
         self.positionOffset = positionOffset
 
     def create(self):
+        import rise.Antenna
         antenna = rise.Antenna.Isotropic(self.positionOffset)
         return [antenna]
     def getAntenna(self):
+        import rise.Antenna
         antenna = rise.Antenna.Isotropic(self.positionOffset)
         return [antenna]
