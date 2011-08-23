@@ -30,51 +30,51 @@ import scenarios.channelmodel
 
 class IndoorHotspotChannelModelCreator(scenarios.channelmodel.SingleChannelModelCreator):
     
-    def __init__(self):
+    def __init__(self, transceiverTypes):
         import rise.scenario.Pathloss
         from rise.scenario import Shadowing
         from rise.scenario import FastFading
-        transceiverPairs = scenarios.channelmodel.defaultPairs
+        transceiverPairs = transceiverTypes
         scenarios.channelmodel.SingleChannelModelCreator.__init__(
             self, transceiverPairs, rise.scenario.Pathloss.ITUInH(), Shadowing.No(), FastFading.No())
 
 class UrbanMicroChannelModelCreator(scenarios.channelmodel.SingleChannelModelCreator):
     
-    def __init__(self):
+    def __init__(self, transceiverTypes):
         import rise.scenario.Pathloss
         from rise.scenario import Shadowing
         from rise.scenario import FastFading
-        transceiverPairs = scenarios.channelmodel.defaultPairs
+        transceiverPairs = transceiverTypes
         scenarios.channelmodel.SingleChannelModelCreator.__init__(
             self, transceiverPairs, rise.scenario.Pathloss.ITUUMi(), Shadowing.No(), FastFading.No())
 
 class UrbanMacroChannelModelCreator(scenarios.channelmodel.SingleChannelModelCreator):
     
-    def __init__(self):
+    def __init__(self, transceiverTypes):
         import rise.scenario.Pathloss
         from rise.scenario import Shadowing
         from rise.scenario import FastFading
-        transceiverPairs = scenarios.channelmodel.defaultPairs
+        transceiverPairs = transceiverTypes
         scenarios.channelmodel.SingleChannelModelCreator.__init__(
                 self, transceiverPairs, rise.scenario.Pathloss.ITUUMa(), Shadowing.No(), FastFading.No())
 
 class RuralMacroChannelModelCreator(scenarios.channelmodel.SingleChannelModelCreator):
     
-    def __init__(self):
+    def __init__(self, transceiverTypes):
         import rise.scenario.Pathloss
         from rise.scenario import Shadowing
         from rise.scenario import FastFading
-        transceiverPairs = scenarios.channelmodel.defaultPairs
+        transceiverPairs = transceiverTypes
         scenarios.channelmodel.SingleChannelModelCreator.__init__(
             self, transceiverPairs, rise.scenario.Pathloss.ITURMa(), Shadowing.No(), FastFading.No())
 
 class SuburbanMacroChannelModelCreator(scenarios.channelmodel.SingleChannelModelCreator):
     
-    def __init__(self):
+    def __init__(self, transceiverTypes):
         import rise.scenario.Pathloss
         from rise.scenario import Shadowing
         from rise.scenario import FastFading
-        transceiverPairs = scenarios.channelmodel.defaultPairs
+        transceiverPairs = transceiverTypes
         scenarios.channelmodel.SingleChannelModelCreator.__init__(
             self, transceiverPairs, rise.scenario.Pathloss.ITUSMa(), Shadowing.No(), FastFading.No())
 

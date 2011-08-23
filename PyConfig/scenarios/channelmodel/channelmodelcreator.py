@@ -31,6 +31,10 @@ defaultPairs = [("AP","AP"),("AP","FRS"),("AP","UT"),
                    ("UT","UT"),("UT","FRS"),("UT","AP"),
                    ("FRS","FRS"),("FRS","AP"),("FRS","UT"),("DropIn","DropIn")]
 
+singlePair = [("default", "default")]
+
+APandUT = [("AP", "UT"), ("UT", "AP")]
+
 class SingleChannelModelCreator(scenarios.interfaces.IChannelModelCreator):
     
     def __init__(self, transceiverPairs, pathloss, shadowing, fastFading):
